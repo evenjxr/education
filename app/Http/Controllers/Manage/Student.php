@@ -2,41 +2,15 @@
 
 namespace App\Http\Controllers\Manage;
 
-use App\Http\Controllers\Controller;
 use Input;
 use Session;
 use App\Extra\SMS;
-use App\Models\City as CityM;
 use App\Models\Student as StudentM;
 
-class Student extends Controller
+class Student extends Base
 {
-    public $grade = [
-        'primary_one' => '小学一年级',
-        'primary_two' => '小学二年级',
-        'primary_three' => '小学三年级',
-        'primary_four' => '小学四年级',
-        'primary_five' => '小学五年级',
-        'primary_six' => '小学六年级',
-        'junior_one' => '初中一年级',
-        'junior_two' => '初中二年级',
-        'junior_three' => '初中三年级',
-        'senior_one' => '高中一年级',
-        'senior_two' => '高中二年级',
-        'senior_three' => '高中三年级'
-    ];
-
-    public $addresses = [
-        1 => '北京',
-        2 => '南京',
-        3 => '上海',
-        4 => '其他'
-    ];
-
     public function add()
     {
-        //$cityArr = CM::lists('name','id')->toArray();
-        //return view('student.add',['cityArr'=>$cityArr]);
         return view('student.add',['grade'=>$this->grade,'addresses'=>$this->addresses]);
     }
 
@@ -82,7 +56,7 @@ class Student extends Controller
         } else {
             $lists = StudentM::get();
         }
-        return view('student.lists',['lists'=>$lists,'addresses'=>$this->addresses,'grade'=>$this->grade]);
+        return view('student.lists',['lists'=>$lists,'addresses'=>$this->addresses,'grades'=>$this->grades]);
     }
 
     public function show($id)

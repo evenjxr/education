@@ -5,13 +5,9 @@ namespace App\Http\Controllers\Manage;
 use App\Http\Controllers\Controller;
 use Input;
 use Session;
-use App\Models\Administrator as AM;
-use App\Models\City as CM;
-use App\Models\Role as RM;
-use App\Models\RoleMoudel as RMM;
-use App\Models\Moudel as MM;
+use App\Models\Manage as ManageM;
 
-class Admin extends Controller
+class Admin extends Base
 {
     public function index()
     {
@@ -29,31 +25,37 @@ class Admin extends Controller
 
     public function add()
     {
-        $cityArr = CM::lists('name','id')->toArray();
-        $roleArr = RM::lists('name','id')->toArray();
-        return view('admin.add',['cityArr'=>$cityArr,'roleArr'=>$roleArr]);
+        return view('admin.add',['addresses'=>$this->addresses]);
     }
 
     public function store()
     {
         $params = Input::all();
         unset($params['password2']);
-        $flag = AM::create($params);
+        if (empty($params['password'])) {
+            $params['password'] = md5(substr($params['mobile'], -4));
+        } else {
+            $params['password'] = md5($params['password']);
+        }
+        $flag = ManageM::create($params);
         if ($flag) return $this->detail($flag->id);
     }
 
     public function detail($id)
     {
-        $admin = AM::find($id);
-        $cityArr = CM::lists('name','id')->toArray();
-        $roleArr = RM::lists('name','id')->toArray();
-        return view('admin.detail',['admin'=>$admin,'cityArr'=>$cityArr,'roleArr'=>$roleArr]);   
+        $admin = ManageM::find($id);
+        return view('admin.detail',['admin'=>$admin,'addresses'=>$this->addresses]);   
     }
 
     public function update()
     {
         $params = Input::all();
-        $admin = AM::find($params['id']);
+        $admin = ManageM::find($params['id']);
+        if(empty($params['password'])){
+             $params['password'] = md5(substr($params['mobile'], -4));
+         } else {
+            $params['password'] = md5($params['password']);
+         }       
         unset($params['password2']);
         $admin->update($params);
         if ($admin) return $this->detail($admin->id)->with('success', '修改成功');
@@ -62,7 +64,7 @@ class Admin extends Controller
     public function auth()
     {
         $params = Input::all();
-        $admin = AM::find($params['id']);
+        $admin = ManageM::find($params['id']);
         if ( $admin->update(['status'=>$params['status']]) ) {
             return 1;
         }
@@ -73,11 +75,11 @@ class Admin extends Controller
     {
         $params = Input::all();
         if (isset($params['name']) && !empty($params['name'])){
-            $lists = AM::where('name','like','%'.$params['name'].'%')->get();
+            $lists = ManageM::where('name','like','%'.$params['name'].'%')->get();
         } else {
-            $lists = AM::get();
+            $lists = ManageM::get();
         }
-        return view('admin.lists',['lists'=>$this->addCity($lists)]);
+        return view('admin.lists',['lists'=>$lists,'addresses'=>$this->addresses]);
     }
 
     public function delete()

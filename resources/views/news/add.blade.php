@@ -17,7 +17,7 @@
 			<div class="formControls col-xs-8 col-sm-10">
 				<span class="select-box" style="width: 300px;">
 				<select name="type" class="select">
-					<option value="">---请选择赛程类型---</option>
+					<option value="news">---请选择赛程类型---</option>
 					@foreach($type as $key=>$value)
 						<option value="{{$key}}">{{$value}}</option>
 					@endforeach

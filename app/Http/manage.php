@@ -127,6 +127,31 @@ Route::group(['prefix' => 'institution'], function () {
 });
 
 
+Route::group(['prefix' => 'server'], function () {
+
+    Route::get('lists',['uses' => 'Manage\Server@lists', 'as' => 'manage.server.lists']);
+
+    Route::get('auth',['uses' => 'Manage\Server@auth', 'as' => 'manage.server.auth']);
+
+    Route::get('add',['uses' => 'Manage\Server@add', 'as' => 'manage.server.add']);
+
+    Route::get('detail',['uses' => 'Manage\Server@detail', 'as' => 'manage.server.detail']);
+
+});
+
+Route::group(['prefix' => 'equipment'], function () {
+
+    Route::get('lists',['uses' => 'Manage\Equipment@lists', 'as' => 'manage.equipment.lists']);
+
+    Route::get('auth',['uses' => 'Manage\Equipment@auth', 'as' => 'manage.equipment.auth']);
+
+    Route::get('add',['uses' => 'Manage\Equipment@add', 'as' => 'manage.equipment.add']);
+
+    Route::get('detail',['uses' => 'Manage\Equipment@detail', 'as' => 'manage.equipment.detail']);
+
+});
+
+
 });
 
 

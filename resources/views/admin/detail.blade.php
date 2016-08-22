@@ -7,25 +7,25 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员姓名：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="{{$admin->name}}" placeholder="" id="adminName" name="name">
+			<input type="text" class="input-text" value="{{$admin->truename}}" placeholder="" id="adminName" name="truename">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员账号：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="{{$admin->account}}" placeholder="" id="adminAccount" name="account">
+			<input type="text" class="input-text" value="{{$admin->username}}" placeholder="" id="adminAccount" name="username">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" value="{{$admin->password}}" placeholder="密码" id="password" name="password">
+			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
 		</div>
 	</div>
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
-			<input type="password" class="input-text" autocomplete="off" value="{{$admin->password}}" placeholder="确认新密码" id="password2" name="password2">
+			<input type="password" class="input-text" autocomplete="off" value="" placeholder="确认新密码" id="password2" name="password2">
 		</div>
 	</div>
 	<div class="row cl">
@@ -37,25 +37,10 @@
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3">城市：</label>
 		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="city_id" size="1">
+			<select class="select" name="address_id" size="1">
 				<option value="0">请选择城市</option>
-				@foreach($cityArr as $key=>$val)
-					@if($key==$admin->city_id) 
-						<option value="{{$key}}" selected="selected">{{$val}}</option>
-					@else
-						<option value="{{$key}}">{{$val}}</option>
-					@endif
-				@endforeach
-			</select>
-			</span> </div>
-	</div>
-	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3">角色：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="role_id" size="1">
-					<option value="0">请选择角色</option>
-				@foreach($roleArr as $key=>$val)
-					@if($key==$admin->role_id) 
+				@foreach($addresses as $key=>$val)
+					@if($key==$admin->address_id) 
 						<option value="{{$key}}" selected="selected">{{$val}}</option>
 					@else
 						<option value="{{$key}}">{{$val}}</option>

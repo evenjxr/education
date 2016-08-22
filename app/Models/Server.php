@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Video extends Eloquent
+class Server extends Eloquent
 {
     use SoftDeletes;
     protected $dates = ['create_at', 'update_at', 'deleted_at'];

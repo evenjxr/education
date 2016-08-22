@@ -30,15 +30,14 @@
 						<td><input type="checkbox" value="1" name=""></td>
 						<td>{{$val->id}}</td>
 						<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','{{ URL::route('manage.teacher.show',['id'=>$val->id]) }}','10001','360','400')">{{$val->username}}</u></td>
-						<td>{{$val->turename}}</td>
+						<td>{{$val->turename ? :''}}</td>
 						<td>{{$val->age}}</td>
 						<td>{{$val->school_name}}</td>
 						<td>{{$val->mobile}}</td>
-						<td>{{$addresses[$val->address]}}</td>
+						<td>{{$val->address?$addresses[$val->address]:''}}</td>
 						<td>{{$val->created_at}}</td>
 						<td class="td-manage">
 							<a onClick="member_sms(this,{{$val->id}})" href="javascript:;" title="发送短信" style="text-decoration:none" class="ml-5" ><i class="Hui-iconfont">&#xe68a;</i></a>
-
 							<a title="编辑" href="javascript:;" onclick="article_edit('管理员编辑','{{ URL::route("manage.teacher.detail",['id'=>$val->id]) }}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 							<a title="删除" href="javascript:;" onclick="article_del(this,'{{$val->id}}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 						</td>

@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zhushiya
- * Date: 15/8/10
- * Time: 下午3:07
- */
 
 namespace App\Validators;
 
 use App\Models\LoginToken;
 use Cache;
 
-class Auth
+class Regist
 {
     /**
      * 校验登录短信是否重复发送
@@ -20,9 +14,9 @@ class Auth
      * @param $parameters
      * @return bool
      */
-    public function whetherLoginSMSSent($attribute, $value, $parameters)
+    public function whetherRegistSMSSent($attribute, $value, $parameters)
     {
-        return !Cache::get($value . LoginToken::SMS_TYPE_LOGIN_RESEND, false);
+        return !Cache::get($value . LoginToken::SMS_TYPE_REGIST_RESEND, false);
     }
 
     /**
@@ -35,6 +29,6 @@ class Auth
     public function checkSMSCode($attribute, $value, $parameters)
     {
         $request = app('request');
-        return Cache::get($request['mobile'] . LoginToken::SMS_TYPE_REGIST, false) === $value;
+        return Cache::get($request['mobile'] . LoginToken::SMS_TYPE_REGIST, false) == $value;
     }
 }

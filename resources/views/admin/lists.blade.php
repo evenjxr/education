@@ -21,7 +21,6 @@
 				<th width="100">登录名</th>
 				<th width="100">姓名</th>
 				<th width="120">手机</th>
-				<th width="90">角色</th>
 				<th width="90">城市</th>
 				<th width="140">加入时间</th>
 				<th width="100">是否已启用</th>
@@ -33,11 +32,10 @@
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
 				<td>{{$val->id}}</td>
-				<td>{{$val->account}}</td>
-				<td>{{$val->name}}</td>
+				<td>{{$val->username}}</td>
+				<td>{{$val->truename}}</td>
 				<td>{{$val->mobile}}</td>
-				<td>{{$val->role}}</td>
-				<td>{{$val->city}}</td>
+				<td>{{$addresses[$val->address_id]}}</td>
 				<td>{{$val->created_at}}</td>
 				<td class="td-status">
 					@if($val->status)

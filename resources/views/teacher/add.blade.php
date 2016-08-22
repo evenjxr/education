@@ -10,12 +10,6 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账号：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" name="username">
-			</div>
-		</div>
-		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>性别：</label>
 			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
 				<div class="radio-box">
@@ -25,17 +19,6 @@
 				<div class="radio-box">
 					<input type="radio" id="sex-2" value="1" name="sex">
 					<label for="sex-2">女</label>
-				</div>
-			</div>
-		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">资格证书：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<div class="uploader-thum-container">
-					<div id="fileList" class="uploader-list">
-						<input name="certificate_url" value="" type="hidden" id="certificate_url">
-						<img src="" id="img">
-					</div>
 				</div>
 			</div>
 		</div>
@@ -70,6 +53,18 @@
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">推荐数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" class="input-text" value="" placeholder="推荐数越多排名越靠前" name="hits">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">好评星：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" class="input-text" value="" placeholder="好评" name="star">
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">城市：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
 				<select class="select" name="address" size="1">
@@ -86,9 +81,31 @@
 			<div class="formControls col-xs-8 col-sm-9"> 
 					@foreach($grade as $key=>$val)
 					<label for="{{$key}}"> 
-					   <input id='{{$key}}' name="grade[]" type="checkbox" value="{{$key}}">{{$val}}
+					   <input id='{{$key}}' name="grade" type="radio" value="{{$key}}">{{$val}}
 					</label>
 					@endforeach
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">可授课年级：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@foreach($grades as $key=>$val)
+					<label for="{{$key}}">
+						<input id='{{$key}}' name="grades[]" type="checkbox" value="{{$key}}">{{$val}}
+					</label>
+				@endforeach
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">课业辅导：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@foreach($schoolwork as $key=>$val)
+					<label for="{{$key}}">
+						<input id='{{$key}}' name="schoolwork[]" type="checkbox" value="{{$key}}">{{$val}}
+					</label>
+				@endforeach
 			</div>
 		</div>
 
@@ -104,11 +121,23 @@
 		</div>
 
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">辅导科目：</label>
+			<label class="form-label col-xs-4 col-sm-2">所授科目：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@foreach($subject as $key=>$val)
+					<label for="{{$key}}">
+						<input id='{{$key}}' name="subject" type="radio" value="{{$key}}">{{$val}}
+					</label>
+				@endforeach
+			</div>
+		</div>
+
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">可辅导科目：</label>
 			<div class="formControls col-xs-8 col-sm-9"> 
-					@foreach($subject as $key=>$val)
+					@foreach($subjects as $key=>$val)
 					<label for="{{$key}}"> 
-					   <input id='{{$key}}' name="subject[]" type="checkbox" value="{{$key}}">{{$val}}
+					   <input id='{{$key}}' name="subjects[]" type="checkbox" value="{{$key}}">{{$val}}
 					</label>
 					@endforeach
 			</div>

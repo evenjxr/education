@@ -6,16 +6,15 @@ use App\Http\Controllers\Controller;
 use Input;
 use Session;
 use App\Models\Manage as MM;
-use App\Models\Role as RM;
 
 
 class Login extends Controller
 {
     public function index()
     {
-//        if (Session::get('admin.id')) {
-//            return redirect('manage/admin/index');
-//        }
+        if (Session::get('admin.id')) {
+            return redirect('manage/admin/index');
+        }
         return view('login.login');
     }
 
@@ -27,8 +26,9 @@ class Login extends Controller
             Session::put('admin.id', $admin->id);
             Session::put('admin.username', $admin->username);
             return redirect('manage/admin/index');
+        } else {
+            return redirect('manage/login/index')->with('errors', '账号密码有误');
         }
-        return redirect('manage/login/index')->with('errors', '账号密码有误');
     }
 
     public function loginout()

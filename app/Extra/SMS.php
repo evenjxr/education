@@ -15,8 +15,15 @@ class SMS
     
     const XSEND_URL = 'https://api.submail.cn/message/xsend';
     const MULTIXSEND_URL = 'https://api.submail.cn/message/multixsend';
-    const APP_ID = '11299';
-    const APP_KEY = 'edc4e4fd65686910c25343ed97d973ce';
+//    const APP_ID = '11299';
+//    const APP_KEY = 'edc4e4fd65686910c25343ed97d973ce';
+    const APP_ID = '11868';
+    const APP_KEY = 'ab32f2c8e1bc986de7658a2ff2dfb20a';
+
+
+
+
+
 
     public static function projectInfo($app)
     {

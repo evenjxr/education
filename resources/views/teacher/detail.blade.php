@@ -2,7 +2,8 @@
 @section('body')
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" id="form-admin-add" method="post" action="{{ URL::route('manage.teacher.store') }}">
+	<form class="form form-horizontal" id="form-admin-add" method="post" action="{{ URL::route('manage.teacher.update') }}">
+		<input type="hidden" name="id" value="{{$teacher->id}}">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">真实姓名：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -29,20 +30,9 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">资格证书：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<div class="uploader-thum-container">
-					<div id="fileList" class="uploader-list">
-						<input name="certificate_url" value="" type="hidden" id="certificate_url">
-						<img src="" id="img">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">年龄：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="number" class="input-text" value="" placeholder="{{$teacher->age}}" name="age">
+				<input type="number" class="input-text" value="{{$teacher->age}}" placeholder="" name="age">
 			</div>
 		</div>
 		<div class="row cl">
@@ -70,6 +60,18 @@
 			</div>
 		</div>
 		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">推荐数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" class="input-text" value="{{$teacher->hits}}" placeholder="推荐数越多排名越靠前" name="hits">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">好评星：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" class="input-text" value="{{$teacher->star}}" placeholder="好评" name="star">
+			</div>
+		</div>
+		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">城市：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
 				<select class="select" name="address" size="1">
@@ -86,9 +88,20 @@
 			<div class="formControls col-xs-8 col-sm-9"> 
 					@foreach($grade as $key=>$val)
 					<label for="{{$key}}"> 
-					   <input id='{{$key}}' name="grade[]" type="checkbox" value="{{$key}}" @if(in_array($key,$teacher->grade))  checked @endif>{{$val}}
+					   <input id='{{$key}}' name="grade" type="radio" value="{{$key}}" @if($key==$teacher->grade)  checked @endif>{{$val}}
 					</label>
 					@endforeach
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">可授课年级：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@foreach($grades as $key=>$val)
+					<label for="{{$key}}">
+						<input id='{{$key}}' name="grade" type="checkbox" value="{{$key}}" @if(in_array($key,$teacher->grades))  checked @endif>{{$val}}
+					</label>
+				@endforeach
 			</div>
 		</div>
 
@@ -104,11 +117,33 @@
 		</div>
 
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">辅导科目：</label>
+			<label class="form-label col-xs-4 col-sm-2">课业辅导：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@foreach($schoolwork as $key=>$val)
+					<label for="{{$key}}">
+						<input id='{{$key}}' name="schoolwork[]" type="checkbox" value="{{$key}}"  @if(in_array($key,$teacher->schoolwork))  checked @endif>{{$val}}
+					</label>
+				@endforeach
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">所授科目：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				@foreach($subject as $key=>$val)
+					<label for="{{$key}}">
+						<input id='{{$key}}' name="subject" type="radio" value="{{$key}}" @if($teacher->subject == $key)  checked @endif>{{$val}}
+					</label>
+				@endforeach
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">可辅导科目：</label>
 			<div class="formControls col-xs-8 col-sm-9"> 
-					@foreach($subject as $key=>$val)
+					@foreach($subjects as $key=>$val)
 					<label for="{{$key}}"> 
-					   <input id='{{$key}}' name="subject[]" type="checkbox" value="{{$key}}" @if(in_array($key,$teacher->subject))  checked @endif>{{$val}}
+					   <input id='{{$key}}' name="subject" type="checkbox" value="{{$key}}" @if(in_array($key,$teacher->subjects))  checked @endif>{{$val}}
 					</label>
 					@endforeach
 			</div>

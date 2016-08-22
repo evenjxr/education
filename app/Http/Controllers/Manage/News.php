@@ -7,7 +7,6 @@ use Input;
 use Session;
 
 use App\Models\News as NM;
-use App\Models\City as CM;
 
 
 class News extends Controller

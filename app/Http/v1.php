@@ -14,7 +14,86 @@ Route::get('menu', ['uses' => 'Api@menu', 'as' => 'api.menu']);
 
 //});
 
+
 Route::get('city/lists', ['uses' => 'User@cityLists', 'as' => 'api.user.city.lists']);
+
+Route::group(['prefix' => 'account'], function () {
+
+    Route::post('login', ['uses' => 'Account@login']);
+
+    Route::post('regist', ['uses' => 'Account@regist']);
+
+    Route::post('sms', ['uses' => 'Account@sms']);
+
+    Route::post('updatepassword', ['uses' => 'Account@updatepassword']);
+
+    Route::get('detail', ['uses' => 'Account@detail']);
+
+    Route::post('update', ['uses' => 'Account@update']);
+});
+
+Route::group(['prefix' => 'teacher'], function () {
+
+    Route::get('lists', ['uses' => 'Teacher@lists']);
+
+    Route::get('detail/{id}', ['uses' => 'Teacher@detail']);
+
+    Route::get('recommend', ['uses' => 'Teacher@recommend']);
+
+    Route::post('update', ['uses' => 'Teacher@update']);
+
+    Route::get('subjects', ['uses' => 'Teacher@subjects']);
+    
+});
+
+Route::group(['prefix' => 'institution'], function () {
+
+    Route::get('teachers', ['uses' => 'Institution@teachers']);
+
+    Route::get('detail/{id}', ['uses' => 'Institution@detail']);
+
+    Route::post('update', ['uses' => 'Institution@update']);
+
+    Route::post('delteacher', ['uses' => 'Institution@delteacher']);
+});
+
+Route::group(['prefix' => 'manage'], function () {
+
+    Route::post('auth/teacher', ['uses' => 'Manage@authTeacher']);
+
+    Route::post('auth/institution', ['uses' => 'Manage@authInstitution']);
+});
+
+Route::group(['prefix' => 'student'], function () {
+
+    Route::get('state', ['uses' => 'Student@state']);
+
+    Route::get('grades', ['uses' => 'Student@grades']);
+
+});
+
+Route::group(['prefix' => 'order'], function () {
+    
+    Route::post('server/add', ['uses' => 'Order@serverAdd']);
+
+    Route::post('equipment/add', ['uses' => 'Order@equipmentAdd']);
+});
+
+
+Route::group(['prefix' => 'inviterecord'], function () {
+
+    Route::get('lists', ['uses' => 'InviteRecord@lists']);
+    
+});
+
+
+
+
+
+
+
+
+
 
 
 Route::group(['prefix' => 'user'], function () {
@@ -31,13 +110,7 @@ Route::group(['prefix' => 'user'], function () {
 
 });
 
-Route::group(['prefix' => 'rank'], function () {
 
-    Route::get('lists/{active_id?}', ['uses' => 'Rank@lists', 'as' => 'api.rank.lists']);
-
-    Route::get('myrank', ['uses' => 'Rank@myRank', 'as' => 'api.my.rank']);
-
-});
 
 
 Route::group(['prefix' => 'news'], function () {

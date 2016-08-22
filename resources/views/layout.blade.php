@@ -112,6 +112,15 @@
                 </ul>
             </dd>
         </dl>
+        <dl id="menu-institution">
+            <dt><i class="Hui-iconfont">&#xe60d;</i> 订单管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <dd>
+                <ul>
+                    <li><a _href="{{ URL::route('manage.equipment.lists') }}" data-title="硬件安装订单" href="javascript:;">硬件安装订单</a></li>
+                    <li><a _href="{{ URL::route('manage.server.lists') }}" data-title="服务预约订单" href="javascript:;">服务预约订单</a></li>
+                </ul>
+            </dd>
+        </dl>
         <dl id="menu-admin">
             <dt><i class="Hui-iconfont">&#xe62d;</i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
             <dd>

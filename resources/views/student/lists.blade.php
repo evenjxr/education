@@ -15,10 +15,9 @@
 					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="40">ID</th>
 					<th width="100">年级</th>
-					<th width="100">账号</th>
+					<th width="100">姓名</th>
 					<th width="60">学校</th>
 					<th width="120">手机</th>
-					<th width="90">地址</th>
 					<th width="140">加入时间</th>
 					<th width="100">操作</th>
 				</tr>
@@ -28,15 +27,13 @@
 					<tr class="text-c">
 						<td><input type="checkbox" value="1" name=""></td>
 						<td>{{$val->id}}</td>
-						<td>{{$grade[$val->grade]}}</td>
-						<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','{{ URL::route('manage.student.show',['id'=>$val->id]) }}','10001','360','400')">{{$val->username}}</u></td>
+						<td>{{ $val->grade ? $grades[$val->grade] : ''}}</td>
+						<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','{{ URL::route('manage.student.show',['id'=>$val->id]) }}','10001','360','400')">{{$val->truename}}</u></td>
 						<td>{{$val->school_name}}</td>
 						<td>{{$val->mobile}}</td>
-						<td>{{$addresses[$val->address]}}</td>
 						<td>{{$val->created_at}}</td>
 						<td class="td-manage">
 							<a onClick="member_sms(this,{{$val->id}})" href="javascript:;" title="发送短信" style="text-decoration:none" class="ml-5" ><i class="Hui-iconfont">&#xe68a;</i></a>
-
 							<a title="编辑" href="javascript:;" onclick="article_edit('管理员编辑','{{ URL::route("manage.student.detail",['id'=>$val->id]) }}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 							<a title="删除" href="javascript:;" onclick="article_del(this,'{{$val->id}}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 						</td>

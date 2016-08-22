@@ -8,15 +8,8 @@ use Session;
 
 use App\Models\Active as AM;
 
-class Active extends Controller
+class Order extends Controller
 {
-    public $standard = [
-        'num_time' => '个数最多/用时最少',
-        'time' => '用时最少',
-        'num' => '个数最多',
-        'best_of_three' => '三次成绩取最好',
-        'victory_lose' => '胜负场'
-    ];
 
     public function lists()
     {

@@ -9,9 +9,10 @@ use App\Extra\SMS;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-use App\Models\User as UM;
+use App\Models\Manage as ManageM;
+use App\Models\Teacher as TeacherM;
+use App\Models\Student as StudentM;
 use App\Models\LoginToken as LTM;
-use App\Models\City as CM;
 
 
 /**
@@ -52,6 +53,27 @@ class User extends Controller
 
     public function login()
     {
+        // $api = new Api();
+        // $userData  = $api->getUserData();
+        // if ($userData) {
+        //     $data = [
+        //         'openid' => $userData['openid'],
+        //         'nickname' => $userData['nickname'],
+        //         'sex' => $userData['sex'],
+        //         'city' => $userData['city'],
+        //         'avatar' => $userData['headimgurl']
+        //     ];
+        //     $user = UM::where('openid',$userData['openid'])->first();
+        //     if (empty($user)) {
+        //         $user = UM::firstOrCreate($data);
+        //     }
+        //     $token = LTM::makeToken();
+        //     LTM::saveToken($user,$token);
+        //     return response()->json(['success' => 'Y','msg' => '登陆成功','token' => $token]);
+        // } else {
+        //     return response()->json(['success' => 'N','msg' => '登陆失败']);
+        // }
+
         $api = new Api();
         $userData  = $api->getUserData();
         if ($userData) {
@@ -85,9 +107,6 @@ class User extends Controller
         $v = $this->validateMobile($request);
         if ($v->fails())
             return response()->json(['success' => 'N','msg' => $v->errors()->toArray()]);
-        $flag = $this->validateHasSend($request->all()['mobile']);
-        if ($flag)
-            return response()->json(['success' => 'N','msg' => '短信已发送']);
         //Send the verification code
         $code = $this->makeAuthSMS($request['mobile']);
 
@@ -200,12 +219,14 @@ class User extends Controller
     
     private function validateMobile($request)
     {
+        echo 324;die;
+        Validator::extend('whether_regist_sms_sent', 'App\Validators\Regist@whetherRegistSMSSent');
         return  Validator::make($request->all(), [
             'mobile' => 'required|digits:11'
         ], [
             'mobile.required' => '请填写您的手机号。',
             'mobile.digits' => '请输入一个正确的手机号。',
-            'mobile.whether_auth_sms_sent' => '短信验证码已发送！',
+            'mobile.whether_regist_sms_sent' => '短信验证码已发送！',
         ]);
     }
     
