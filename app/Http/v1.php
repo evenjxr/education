@@ -14,8 +14,20 @@ Route::get('menu', ['uses' => 'Api@menu', 'as' => 'api.menu']);
 
 //});
 
+Route::group(['prefix' => 'common'], function () {
 
-Route::get('city/lists', ['uses' => 'User@cityLists', 'as' => 'api.user.city.lists']);
+    Route::get('schoolwork', ['uses' => 'Common@getSchoolWork']);
+
+    Route::get('teacher/state', ['uses' => 'Common@getTeacherState']);
+
+    Route::get('teacher/worktime', ['uses' => 'Common@getWorkTime']);
+
+    Route::get('subjects', ['uses' => 'Common@getSubjects']);
+
+    Route::post('upload', ['uses' => 'Common@upload']);
+});
+
+Route::get('address/lists', ['uses' => 'Address@lists']);
 
 Route::group(['prefix' => 'account'], function () {
 
@@ -25,7 +37,9 @@ Route::group(['prefix' => 'account'], function () {
 
     Route::post('sms', ['uses' => 'Account@sms']);
 
-    Route::post('updatepassword', ['uses' => 'Account@updatepassword']);
+    Route::post('updatepassword', ['uses' => 'Account@updatePassword']);
+
+    Route::post('findpassword', ['uses' => 'Account@findPassword']);
 
     Route::get('detail', ['uses' => 'Account@detail']);
 
@@ -43,6 +57,8 @@ Route::group(['prefix' => 'teacher'], function () {
     Route::post('update', ['uses' => 'Teacher@update']);
 
     Route::get('subjects', ['uses' => 'Teacher@subjects']);
+
+    Route::get('unauth/lists', ['uses' => 'Teacher@unAuthLists']);
     
 });
 
@@ -54,7 +70,12 @@ Route::group(['prefix' => 'institution'], function () {
 
     Route::post('update', ['uses' => 'Institution@update']);
 
-    Route::post('delteacher', ['uses' => 'Institution@delteacher']);
+    Route::post('delteacher', ['uses' => 'Institution@delTeacher']);
+
+    Route::post('addteacher', ['uses' => 'Institution@addTeacher']);
+
+    Route::get('unauth/lists', ['uses' => 'Institution@unAuthLists']);
+
 });
 
 Route::group(['prefix' => 'manage'], function () {
@@ -68,15 +89,35 @@ Route::group(['prefix' => 'student'], function () {
 
     Route::get('state', ['uses' => 'Student@state']);
 
+    Route::get('order/lists', ['uses' => 'Student@orderLists']);
+
     Route::get('grades', ['uses' => 'Student@grades']);
 
 });
 
 Route::group(['prefix' => 'order'], function () {
+
+    Route::get('server/lists', ['uses' => 'Order@serverList']);
     
     Route::post('server/add', ['uses' => 'Order@serverAdd']);
 
+    Route::get('server/detail', ['uses' => 'Order@serverDetail']);
+    
+    
+    
+    Route::get('server/fee', ['uses' => 'Order@serverFee']);
+    
+    Route::get('teacher/fee', ['uses' => 'Order@teacherFee']);
+    
+    
+
     Route::post('equipment/add', ['uses' => 'Order@equipmentAdd']);
+
+    Route::get('equipment/lists', ['uses' => 'Order@equipmentList']);
+
+    Route::get('equipment/detail', ['uses' => 'Order@equipmentDetail']);
+
+    Route::get('equipment/has', ['uses' => 'Order@hasEquipment']);
 });
 
 
@@ -120,71 +161,6 @@ Route::group(['prefix' => 'news'], function () {
     Route::get('detail/{id}', ['uses' => 'News@detail', 'as' => 'api.news.detail']);
 });
 
-Route::group(['prefix' => 'video'], function () {
-
-    Route::get('lists', ['uses' => 'Video@lists', 'as' => 'api.video.lists']);
-
-});
-
-Route::group(['prefix' => 'figure'], function () {
-
-    Route::get('lists', ['uses' => 'Figure@lists', 'as' => 'api.figure.lists']);
-
-    Route::get('detail/{id}', ['uses' => 'Figure@detail', 'as' => 'api.figure.detail']);
-
-});
-
-Route::group(['prefix' => 'active'], function () {
-
-    Route::get('lists', ['uses' => 'Active@lists', 'as' => 'api.active.lists']);
-
-    Route::get('lsitsbychannel/{channel?}', ['uses' => 'Active@getListByChannel', 'as' => 'api.active.bychannel']);
-
-    Route::get('detail/{id}', ['uses' => 'Active@detail', 'as' => 'api.active.detail']);
-
-    Route::get('theme/detail', ['uses' => 'Active@themeDetail', 'as' => 'api.active.theme']);
-
-});
-
-Route::group(['prefix' => 'schedule'], function () {
-
-    Route::get('lists/{time?}', ['uses' => 'Schedule@lists', 'as' => 'api.schedule.lists']);
-
-    Route::get('theme/detail', ['uses' => 'Schedule@themeDetail', 'as' => 'api.schedule.theme']);
-
-});
 
 
-Route::group(['prefix' => 'team'], function () {
 
-    Route::post('store', ['uses' => 'Team@store', 'as' => 'api.team.store']);
-
-    Route::get('detail/{id?}', ['uses' => 'Team@detail', 'as' => 'api.team.detail']);
-
-    Route::any('delete', ['uses' => 'Team@delete', 'as' => 'api.team.delete']);
-
-    Route::any('addplayer', ['uses' => 'Team@addPlayer', 'as' => 'api.add.player']);
-
-    Route::any('deleteplayer', ['uses' => 'Team@deletePlayer', 'as' => 'api.delete.player']);
-});
-
-
-Route::group(['prefix' => 'collection'], function () {
-
-    Route::get('lists', ['uses' => 'Collection@lists', 'as' => 'api.collection.lists']);
-
-    Route::post('add', ['uses' => 'Collection@add', 'as' => 'api.collection.add']);
-
-    Route::post('delete', ['uses' => 'Collection@delete', 'as' => 'api.collection.delete']);
-});
-
-Route::group(['prefix' => 'tournament'], function () {
-
-    Route::get('lists', ['uses' => 'Tournament@lists', 'as' => 'api.tournament.lists']);
-
-    Route::get('signup/{id}', ['uses' => 'Tournament@add', 'as' => 'api.tournament.signup']);
-
-    Route::post('dosignup', ['uses' => 'Tournament@store', 'as' => 'api.tournament.dosignup']);
-
-    Route::get('cancel/{id}', ['uses' => 'Tournament@delete', 'as' => 'api.tournament.delete']);
-});

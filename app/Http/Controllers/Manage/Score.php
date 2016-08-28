@@ -35,7 +35,7 @@ class Score extends Controller
             $active_id = ASM::where('schedule_id',$value->id)->lists('active_id');
             $schedule[$key]->active = AM::whereIn('id',$active_id)->lists('name','id');
         }
-        return view('score.lists',['lists'=>$schedule]);
+        return view('invite.lists',['lists'=>$schedule]);
     }
 
     public function addTeamScore()
@@ -73,7 +73,7 @@ class Score extends Controller
             ->orderBy('users.id')
             ->select('users.id','users.name','users.idcard','users.age','users.sex','users.mobile','users.id','tournaments.actives')
             ->get();
-        return view('score.personal')->with(['schedule'=>$schedule,'active'=>$active,'user'=>$user,'data'=>$data]);
+        return view('invite.personal')->with(['schedule'=>$schedule,'active'=>$active,'user'=>$user,'data'=>$data]);
     }
 
 
@@ -95,7 +95,7 @@ class Score extends Controller
                 $team[$key]->active_id = $active[0];
             }
         }
-        return view('score.team')->with(['team'=>$team,'schedule_id'=>$id]);
+        return view('invite.team')->with(['team'=>$team,'schedule_id'=>$id]);
     }
 
     public function teamHistory()
@@ -107,7 +107,7 @@ class Score extends Controller
             $history[$key]->team_one_name = TM::find($value->team_one_id)->name;
             $history[$key]->team_two_name = TM::find($value->team_two_id)->name;
         }
-        return view('score.teamhistory',['history'=>$history,'team_id'=>$params['team_id'],'team_name'=>TM::find($params['team_id'])->name,'schedule_id'=>$params['schedule_id']]);
+        return view('invite.teamhistory',['history'=>$history,'team_id'=>$params['team_id'],'team_name'=>TM::find($params['team_id'])->name,'schedule_id'=>$params['schedule_id']]);
     }
 
     public function vsTeams()
@@ -127,7 +127,7 @@ class Score extends Controller
         $team_two = isset($team_ids[1]) ? TM::find($team_ids[1]) : null;
         $team_scores = isset($team_scores) ? $team_scores : null;
         $schedule_id = $id;
-        return view('score.vsteams',compact('team_one','team_two','team_scores','schedule_id'));
+        return view('invite.vsteams',compact('team_one','team_two','team_scores','schedule_id'));
     }
 
     public function updateTeamHistory()

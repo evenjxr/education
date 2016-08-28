@@ -117,7 +117,7 @@ class Api extends Controller
                         [
                             'name' => '我的成绩',
                             'type' => 'view',
-                            'url'  => 'http://101.200.131.30/v1/score',
+                            'url'  => 'http://101.200.131.30/v1/invite',
                         ]
                     ],
                 ],

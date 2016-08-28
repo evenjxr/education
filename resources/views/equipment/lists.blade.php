@@ -3,24 +3,24 @@
 	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 定单管理 <span class="c-gray en">&gt;</span> 订单列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>	<div class="page-container">
 		<div class="text-c">
 			<form method="get" action="{{ URL::route('manage.equipment.lists') }}">
-				<input type="text" class="input-text" style="width:250px" placeholder="微信昵称,姓名,手机号,身份证" id="" name="keyword">
+				<input type="text" class="input-text" style="width:250px" placeholder="手机号" id="" name="keyword">
 				<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
 			</form>
 		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a class="btn btn-primary radius" data-title="添加订单" _href="{{ URL::route('manage.equipment.add') }}" onclick=article_add('添加订单','{{ URL::route("manage.equipment.add") }}') href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加订单</a></span> <span class="r">共有数据：<strong>{{count($lists)}}</strong> 条</span> </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="r">共有数据：<strong>{{count($lists)}}</strong> 条</span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 				<tr class="text-c">
 					<th width="40">ID</th>
-					<th width="100">预约电话</th>
-					<th width="140">联系人姓名</th>
-					<th width="100">预约类型</th>
-					<th width="120">城市</th>
-					<th width="140">推荐类型</th>
+					<th width="110">预约电话</th>
+					<th width="70">联系人姓名</th>
+					<th width="100">老师/学生</th>
+					<th width="180">地址</th>
+					<th width="50">推荐类型</th>
 					<th width="140">下单时间</th>
-					<th width="140">状态</th>
-					<th width="100">操作</th>
+					<th width="80">状态</th>
+					<th width="140">操作</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -30,7 +30,7 @@
 						<td>{{$val->mobile}}</td>
 						<td>{{$val->link_name}}</td>
 						<td>{{$val->member_type}}</td>
-						<td>{{$val->address_id}}</td>
+						<td>{{$val->city}} , {{$val->address_detail}}</td>
 						<td>{{$val->recommend_type}}</td>
 						<td>{{$val->created_at}}</td>
 						<td>				

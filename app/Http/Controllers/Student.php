@@ -20,6 +20,11 @@ class Student extends Controller
         return response()->json(['success'=>'Y','msg' => '','data'=>$this->grades]);
     }
 
+    public function orderLists()
+    {
+        
+    }
+
 
 
 

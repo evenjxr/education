@@ -18,7 +18,6 @@
 			<tr class="text-c">
 				<th width="25"><input type="checkbox" name="" value=""></th>
 				<th width="40">ID</th>
-				<th width="100">登录名</th>
 				<th width="100">姓名</th>
 				<th width="120">手机</th>
 				<th width="90">城市</th>
@@ -32,10 +31,9 @@
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
 				<td>{{$val->id}}</td>
-				<td>{{$val->username}}</td>
 				<td>{{$val->truename}}</td>
 				<td>{{$val->mobile}}</td>
-				<td>{{$addresses[$val->address_id]}}</td>
+				<td>{{ $val->address_id ? $addresses[$val->address_id] : ''}}</td>
 				<td>{{$val->created_at}}</td>
 				<td class="td-status">
 					@if($val->status)

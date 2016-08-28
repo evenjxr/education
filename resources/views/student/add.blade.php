@@ -47,9 +47,15 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">城市：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-				<select class="select" name="address" size="1">
+			<label class="form-label col-xs-3 col-sm-2">选择省份：</label>
+			<div class="formControls col-md-3 col-sm-3"> <span class="select-box" style="width:150px;">
+				<select class="select"  size="1">
+					<option class="province">请选择省份</option>
+				</select>
+				</span> </div>
+			<label class="form-label col-xs-3 col-sm-2">选择城市：</label>
+			<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
+				<select class="select" name="address_id" size="1">
 					<option value="0">请选择城市</option>
 					@foreach($addresses as $key=>$val)
 						<option value="{{$key}}">{{$val}}</option>
@@ -129,6 +135,40 @@ $(function(){
 			parent.layer.close(index);
 		}
 	});
+
+	var address = {};
+
+
+	$.ajax({
+		type: "GET",
+		url: "{{URL::route('manage.address.lists') }}",
+		data: {},
+		dataType: "json",
+		success: function(data){
+			address = data.data;
+			getProvince(address);
+		}
+	});
 });
+	function getProvince(address) {
+		var province = new Array();
+		$.each(address,function (name,value) {
+			province.push(value.province);
+		});
+		$.unique(province);
+		var html = '';
+		$.each(province,function (index,value) {
+			html += "<option value='"+index+"' >"+value+"</option>";
+		});
+		console.log(html);
+		//$('.province').append(html);
+	}
+
+	$('.province').change(function () {
+		console.log(123);
+	});
+
+
+
 </script> 
 @endsection

@@ -7,6 +7,9 @@ Route::group(['prefix' => 'login'], function () {
     Route::get('loginout', ['uses' => 'Manage\Login@loginout', 'as' => 'manage.login.out']);
 });
 
+
+
+
 Route::group(['middleware' => 'manage.login'], function () {
     
 Route::group(['prefix' => 'common'], function () {
@@ -17,6 +20,7 @@ Route::group(['prefix' => 'common'], function () {
 
     Route::get('collecion', ['uses' => 'Manage\Common@collection', 'as' => 'manage.common.collection']);
 
+    Route::get('addresses', ['uses' => 'Manage\Address@lists', 'as' => 'manage.address.lists']);
 });
 
   
@@ -135,6 +139,8 @@ Route::group(['prefix' => 'server'], function () {
 
     Route::get('add',['uses' => 'Manage\Server@add', 'as' => 'manage.server.add']);
 
+    Route::get('update',['uses' => 'Manage\Server@updatae', 'as' => 'manage.server.update']);
+
     Route::get('detail',['uses' => 'Manage\Server@detail', 'as' => 'manage.server.detail']);
 
 });
@@ -146,6 +152,8 @@ Route::group(['prefix' => 'equipment'], function () {
     Route::get('auth',['uses' => 'Manage\Equipment@auth', 'as' => 'manage.equipment.auth']);
 
     Route::get('add',['uses' => 'Manage\Equipment@add', 'as' => 'manage.equipment.add']);
+
+    Route::post('update',['uses' => 'Manage\Equipment@update', 'as' => 'manage.equipment.update']);
 
     Route::get('detail',['uses' => 'Manage\Equipment@detail', 'as' => 'manage.equipment.detail']);
 

@@ -7,21 +7,22 @@
 				<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜订单</button>
 			</form>
 		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a class="btn btn-primary radius" data-title="添加订单" _href="{{ URL::route('manage.server.add') }}" onclick=article_add('添加订单','{{ URL::route("manage.server.add") }}') href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加订单</a></span> <span class="r">共有数据：<strong>{{count($lists)}}</strong> 条</span> </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20">  <span>总金额: <strong>{{$total}} 元</strong> </span> <span>总支付: <strong>{{$has_pay}} 元</strong> </span><span class="r">共有数据：<strong>{{count($lists)}}</strong> 条</span> </div>
 		<div class="mt-20">
 			<table class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 				<tr class="text-c">
 					<th width="40">ID</th>
-					<th width="160">预约电话</th>
-					<th width="140">作业辅导服务</th>
-					<th width="100">预习/复习服务</th>
-					<th width="120">补习服务</th>
-					<th width="120">总费用</th>
-					<th width="120">下单时间</th>
-					<th width="120">服务员工</th>
-					<th width="100">状态</th>
-					<th width="100">操作</th>
+					<th width="85">预约电话</th>
+					<th width="60">作业辅导</th>
+					<th width="60">预习/复习</th>
+					<th width="60">补习服务</th>
+					<th width="40">总费用</th>
+					<th width="130">下单时间</th>
+					<th width="60">服务员工</th>
+					<th width="60">预约老师</th>
+					<th width="60">状态</th>
+					<th width="140">操作</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -30,11 +31,12 @@
 						<td>{{$val->id}}</td>
 						<td>{{$val->mobile}}</td>
 						<td>{{$val->homework_server}}</td>
-						<td>{{$val->perpare_server}}</td>
+						<td>{{$val->prepare_server}}</td>
 						<td>{{$val->extra_server}}</td>
 						<td>{{$val->total_fee}}</td>
 						<td>{{$val->created_at}}</td>
-						<td>{{$val->staff_id}}</td>
+						<td>{{$val->manage_name}}</td>
+						<td>{{$val->teacher_name}}</td>
 						<td>				
 							@if($val->status==0)
 							<span class="label label-danger radius">取消订单</span>

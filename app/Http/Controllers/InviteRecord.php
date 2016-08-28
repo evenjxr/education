@@ -28,22 +28,28 @@ class InviteRecord extends Controller
         foreach ($invites as $key => $value) {
             switch ($value->type) {
                 case 'teacher':
-                    $invites[$key]->name =$teacher->find($value->user_id)['truename'];
+                    $teacher = $teacher->find($value->user_id);
+                    $invites[$key]->name =$teacher->truename;
+                    $invites[$key]->mobile =$teacher->mobile;
                     break;
                 case 'manage':
-                    $invites[$key]->name =$manage->find($value->user_id)['truename'];
+                    $manage = $manage->find($value->user_id);
+                    $invites[$key]->name =$manage->truename;
+                    $invites[$key]->mobile =$manage->mobile;
                     break;
                 case 'institution':
-                    $invites[$key]->name =$institution->find($value->user_id)['truename'];
+                    $institution = $institution->find($value->user_id);
+                    $invites[$key]->name =$institution->truename;
+                    $invites[$key]->mobile =$institution->mobile;
                     break;
                 default:
-                    $invites[$key]->name =$student->find($value->user_id)['truename'];
+                    $student = $student->find($value->user_id);
+                    $invites[$key]->name =$student->truename;
+                    $invites[$key]->mobile =$student->mobile;
                     break;
             }
-
-            return response()->json(['success' => 'Y', 'msg' => '', 'data' => $invites]);
-
         }
+        return response()->json(['success' => 'Y', 'msg' => '', 'data' => $invites]);
 
 
 

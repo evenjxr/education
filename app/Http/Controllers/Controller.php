@@ -48,6 +48,9 @@ abstract class Controller extends BaseController
         3 => '上海',
         4 => '其他'
     ];
+    
+    
+    
 
     public $workTime = [
         'Mon' => '周一',
@@ -103,6 +106,13 @@ abstract class Controller extends BaseController
     ];
     
     public $status = ['认证失败','待认证','已认证'];
+    
+    public $orderStatus = [1=>'未支付',2=>'已支付',3=>'取消订单',4=>'退款'];
+    
+    public $fee = [        
+        'homework_fee' => 300,
+        'prepare_fee' => 500,
+        'equipment_fee' => 500];
 
 
     public  function userInfo($request)

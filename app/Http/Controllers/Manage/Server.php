@@ -7,6 +7,9 @@ use Input;
 use Session;
 
 use App\Models\Server as ServerM;
+use App\Models\Teacher as TeacherM;
+use App\Models\Manage as ManageM;
+use App\Models\Equipment as EquipmentM;
 
 class Server extends Controller
 {
@@ -16,19 +19,31 @@ class Server extends Controller
         $params = Input::all();
         $server = new ServerM();
 
-        if ( isset($params['mobile']) && $params['mobile'] ) {
+        if ( isset($params['mobile']) && $params['mobile'] )
             $server = $server->where('mobile',$params['mobile']);
-        }
         if ( isset($params['start']) && $params['start'] ) 
             $server = $server->where('created_at','>=',$params['start']);
-
         if ( isset($params['end']) && $params['end'] ) 
             $server = $server->where('created_at','<=',$params['end']) ;
-
         if ( isset($params['status'])&&$params['status']!='' )
             $server = $server->where('status',$params['status']);
-
-        return view('server.lists',['lists'=>$server->get()]);
+        $lists = $server->get();
+        foreach ($lists as $key => $value){
+            $lists[$key]->manage_name = ManageM::find($value->manage_id)['truename'];
+            $teacher = EquipmentM::where('equipment.mobile',$value->mobile)
+                ->leftjoin('teachers','teachers.id','=','equipment.teacher_id')
+                ->select('truename','teachers.id','equipment.teacher_id','teacher_id')->get()[0]->truename;
+            $lists[$key]->teacher_name = $teacher;
+        }
+        $amounts = ServerM::all(['total_fee','status']);
+        $total = $has_pay = 0;
+        foreach ($amounts as $key=>$value) {
+            if ($value->status == 2) {
+                $has_pay += $value->total_fee;
+            }
+            $total += $value->total_fee;
+        }
+        return view('server.lists',['lists'=>$lists,'total'=>$total,'has_pay'=>$has_pay]);
     }
 
     public function add()

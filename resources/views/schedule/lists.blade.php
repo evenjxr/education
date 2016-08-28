@@ -43,7 +43,7 @@
 					<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','{{ URL::route('manage.schedule.detail',['id'=>$val->id]) }}','{{$val->id}}')" title="查看">{{$val->title}}</u></td>
 					<td>
 						@if($val->channel == 'personal')
-							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('manage.score.personaldetail',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑">{{$val->sign_num}}/{{$val->max_num}}</a>
+							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('invite',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑">{{$val->sign_num}}/{{$val->max_num}}</a>
 						@elseif($val->channel == 'team')
 							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('manage.score.vsteams',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑">{{$val->sign_num}}/{{$val->max_num}}</a>
 						@else

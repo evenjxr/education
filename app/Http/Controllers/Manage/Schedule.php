@@ -170,7 +170,7 @@ class schedule extends Controller
             'channel' => 'personal'
         ];
         $flag = TM::firstOrCreate($data);
-        if ($flag) return redirect(URL::route('manage.score.personaldetail',['id'=>$params['id']]));
+        if ($flag) return redirect(URL::route('manage.invite.personaldetail',['id'=>$params['id']]));
     }
 
     //个人删除报名
@@ -180,7 +180,7 @@ class schedule extends Controller
         TM::where(['schedule_id'=>$params['schedule_id'],'user_id'=>$params['user_id']])->delete();
         SSM::where(['schedule_id'=>$params['schedule_id'],'user_id'=>$params['user_id']])->delete();
         SM::where('id',$params['schedule_id'])->decrement('sign_num');
-        return redirect(URL::route('manage.score.personaldetail',['id'=>$params['schedule_id']]));
+        return redirect(URL::route('manage.invite.personaldetail',['id'=>$params['schedule_id']]));
     }
 
 //    public function signUpUpdate()

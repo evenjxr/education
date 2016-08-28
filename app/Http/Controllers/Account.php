@@ -32,6 +32,9 @@ class Account extends Controller
             case 'manage':
                 $model = new ManageM;
                 break;
+            case 'institution':
+                $model = new InstitutionM;
+                break;
             default:
                 $model = new StudentM;
                 break;
@@ -55,7 +58,7 @@ class Account extends Controller
     public function regist(Request $request)
     {
         //验证参数
-        //$this->validateRegist($request);
+        $this->validateRegist($request);
         $param = Input::all();
         switch ($param['type']) {
             case 'teacher':
@@ -116,13 +119,34 @@ class Account extends Controller
         return;
     }
 
-    public  function updatepassword(Request $request)
+    public  function updatePassword(Request $request)
     {
         $this->userInfo($request);
-        $this->validatePassword($request);
         $password = Input::get('password');
         $this->userInfo->update(['password'=>md5($password)]);
         return response()->json(['success' => 'Y','msg' => '修改成功']);
+    }
+
+    public  function findPassword(Request $request)
+    {
+        $this->validatePassword($request);
+        $param = Input::all();
+        $one = TeacherM::where('mobile',$param['mobile'])->first();
+        if(!$one) {
+            $one = StudentM::where('mobile',$param['mobile'])->first();
+        }
+        if(!$one) {
+            $one = InstitutionM::where('mobile',$param['mobile'])->first();
+        }
+        if(!$one) {
+            $one = ManageM::where('mobile',$param['mobile'])->first();
+        }
+        if ($one) {
+            $one->update(['password'=>md5($param['password'])]);
+            return response()->json(['success' => 'Y','msg' => '修改成功']);
+        } else {
+            return response()->json(['success' => 'N','msg' => '修改失败请联系管理员']); 
+        }
     }
 
     public function detail(Request $request)
@@ -148,8 +172,7 @@ class Account extends Controller
     public function sms(Request $request)
     {
         $this->validateMobile($request);
-        //$code = $this->makeAuthSMS($request['mobile']);
-        $code = '123456';
+        $code = $this->makeAuthSMS($request['mobile']);
         return response()->json(['success'=>'Y','code' => $code]);
     }
 
@@ -188,11 +211,15 @@ class Account extends Controller
 
     private function validatePassword($request)
     {
+        Validator::extend('check_sms_code', 'App\Validators\Regist@checkSMSCode');
         $this->validate($request, [
-            'password' => 'required|between:4,10'
+            'password' => 'required|between:4,10',
+            'smscode' => 'required|digits:6|check_sms_code',
         ], [
             'password.required' => '密码不得为空',
             'password.between' => '密码必须在4到10之间',
+            'smscode.required' => '验证码不得为空',
+            'smscode.check_sms_code' => '验证码不正确'
         ]);
     }
 

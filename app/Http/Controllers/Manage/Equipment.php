@@ -7,6 +7,7 @@ use Input;
 use Session;
 
 use App\Models\Equipment as EquipmentM;
+use App\Models\Address as AddressM;
 
 class Equipment extends Controller
 {
@@ -28,7 +29,16 @@ class Equipment extends Controller
         if ( isset($params['status'])&&$params['status']!='' )
             $equipment = $equipment->where('status',$params['status']);
 
-    	return view('equipment.lists',['lists'=>$equipment->get()]);
+        $lists = $equipment->get();
+        foreach ($lists as $key=>$value) {
+            $lists[$key]->city = AddressM::find($value->address_id) ['city'];
+            if ($value->recommend_type == 1) {
+                $lists[$key]->recommend_type = '平台推荐';
+            } else {
+                $lists[$key]->recommend_type = '指定老师';
+            }
+        }
+    	return view('equipment.lists',['lists'=>$lists]);
     }
 
     public function add()
@@ -44,10 +54,11 @@ class Equipment extends Controller
      //    if ($flag) return $this->detail($flag->id)->with('success', '新增成功');
     }
 
-    public function detail($id)
+    public function detail()
     {
-        // $equipment = AM::find($id);
-        // return view('equipment.detail',['equipment'=>$equipment,'channel'=>AM::channel(),'standard'=>$this->standard]);
+        $id = Input::get('id');
+        $equipment = EquipmentM::find($id);
+        return view('equipment.detail',['equipment'=>$equipment]);
     }
 
     public function update()

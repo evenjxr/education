@@ -14,20 +14,26 @@ class Teacher extends Controller
     {
         $params = Input::all();
         $data = new TeacherM;
+        if (isset($params['mobile']) && !empty($params['mobile']))
+            $data = $data->where('mobile','like','%'.$params['mobile'].'%');
         if (isset($params['subject']) && !empty($params['subject']))
-                $data = $data->where('subject',$params['subject']);
+            $data = $data->where('subject',$params['subject']);
         if (isset($params['grade']) && !empty($params['grade']))
-            $data = $data->where('grade',$params['grade']);
+            $data = $data->where('grade','like',$params['grade']);
         if (isset($params['schoolwork']) && !empty($params['schoolwork']))
             $data = $data->where('schoolwork','like','%'.$params['schoolwork'].'%');
         if (isset($params['truename']) && !empty($params['truename']))
-            $data = $data->where('schoolwork',$params['truename']);
-        if (isset($params['mobile']) && !empty($params['mobile']))
-            $data = $data->where('mobile',$params['mobile']);
-
+            $data = $data->where('truename','like','%'.$params['truename'].'%');
         $data = $data->orderBy('hits','desc')
             ->orderBy('star','desc')
             ->paginate('10',['id','truename','star','school_name','worked_year','grade','subject','introduction','avatar'])->toArray();
+
+        foreach ($data['data'] as $key=>$value){
+            if ($value['grade']) {
+                $data['data'][$key]['grade'] && $data['data'][$key]['grade'] = $this->grade[$value['grade']];
+                $data['data'][$key]['subject'] && $data['data'][$key]['subject'] = $this->subject[$value['subject']];
+            }
+        }
         return response()->json(['success' => 'Y','msg' => '','data'=>$data['data']]);
     }
 
@@ -35,8 +41,8 @@ class Teacher extends Controller
     {
         $data = TeacherM::find($id);
         if($data) {
-            $data->grade = $this->grade[$data->grade];
-            $data->subject = $this->subject[$data->subject];
+            $data->grade && $data->grade = $this->grade[$data->grade];
+            $data->subject  && $data->subject = $this->subject[$data->subject];
             $data->grades = unserialize($data->grades);
             $data->subjects = unserialize($data->subjects);
             $data->schoolwork = unserialize($data->schoolwork);
@@ -51,6 +57,12 @@ class Teacher extends Controller
             ->orderBy('star','desc')
             ->limit(6)
             ->get(['id','truename','star','school_name','worked_year','grade','subject','introduction','avatar'])->toArray();
+        foreach ($data as $key=>$value){
+            if ($value['grade']) {
+                $data[$key]['grade'] && $data[$key]['grade'] = $this->grade[$value['grade']];
+                $data[$key]['subject'] && $data[$key]['subject'] = $this->subject[$value['subject']];
+            }
+        }
         return response()->json(['success' => 'Y','msg' => '','data'=>$data]);
     }
 
@@ -73,6 +85,21 @@ class Teacher extends Controller
         $teacher = TeacherM::find($params['id']);
         $teacher->update(['status'=>2]);
         return response()->json(['success' => 'Y','msg' => '审核成功']);
+    }
+
+    public function unAuthLists()
+    {
+        $data = TeacherM::where('status','<>','2')->orderBy('id','desc')->paginate('20',['id','truename','status','created_at'])->toArray();
+        foreach ($data['data'] as $key=>$value) {
+            if ($value['status'] == 1) {
+                $data['data'][$key]['status'] = '待审核';
+            } elseif($value['status'] == 3) {
+                $data['data'][$key]['status'] = '已发布';
+            } else {
+                $data['data'][$key]['status'] = '审核失败';
+            }
+        }
+        return response()->json(['success' => 'Y','msg' => '','data'=>$data['data']]);
     }
 
     public function subjects()

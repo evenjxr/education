@@ -4,15 +4,7 @@
 <div class="page-container">
 	<form method="get" action="{{ URL::route('manage.news.lists') }}">
 		<div class="text-c">
-			<span class="select-box inline">
-				<select name="status" class="select">
-					<option value="">全部</option>
-					<option value="0">未通过</option>
-					<option value="1">草稿</option>
-					<option value="2">上线</option>
-					<option value="3">下线</option>
-				</select>
-			</span> 日期范围：
+			 日期范围：
 			<input type="text" name="start" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
 			-
 			<input type="text" name="end" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;">
@@ -26,7 +18,7 @@
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="80">ID</th>
+					<th width="30">ID</th>
 					<th width="80">标题</th>
 					<th width="80">类型</th>
 					<th width="200">描述</th>
@@ -41,7 +33,7 @@
 					<td>{{$val->id}}</td>
 					<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','{{ URL::route('manage.news.detail',['id'=>$val->id]) }}','{{$val->id}}')" title="查看">{{$val->title}}</u></td>
 					<td>{{$type[$val->type]}}</td>
-					<td>{{$val->description}}</td>
+					<td>{{mb_substr($val->description,0,50) }}</td>
 					<td class="td-status">
 						@if($val->status==0)
 						<span class="label label-danger radius">未通过</span>

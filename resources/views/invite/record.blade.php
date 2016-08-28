@@ -1,95 +1,61 @@
 ﻿@extends('layout2')
 @section('body')
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 赛程管理 <span class="c-gray en">&gt;</span> 赛程列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
-<div class="page-container">
-	<div class="text-c">
-		<form method="get" action="{{ URL::route('manage.schedule.lists') }}">
-			<input type="text" name="keyword" id="" placeholder="赛程" style="width:250px" class="input-text">
-			<button id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜赛程</button>
-		</form>	
-	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20">
-		<span class="r">共有数据：<strong>{{count($lists)}}</strong> 条</span> </div>
-	<div class="mt-20">
-		<table class="table table-border table-bordered table-bg table-hover table-sort">
-			<thead>
+	<div class="page-container">
+		<div class="text-c">
+			<form method="get" action="{{ URL::route('manage.invite.search') }}">
+				日期范围：
+				<input type="text" name="start" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
+				-
+				<input type="text" name="end" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;">
+				<input type="text" name="keyword" id="" placeholder=" 活动名称" style="width:250px" class="input-text">
+				<button id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜活动</button>
+			</form>
+		</div>
+		<div class="mt-20">
+			<table class="table table-border table-bordered table-bg table-hover table-sort">
+				<thead>
 				<tr class="text-c">
-					<th width="75">标题</th>
-					<th width="180">活动</th>
-					<th width="60">报名人数</th>
-					<th width="120">操作</th>
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="80">ID</th>
+					<th width="80">姓名</th>
+					<th width="80">账号类型</th>
+					<th width="140">注册时间</th>
+					<th width="140">下单数量</th>
+					<th width="140">下单金额</th>
 				</tr>
-			</thead>
-			<tbody>
-				
+				</thead>
+				<tbody>
 				@foreach($lists as $val)
-				<tr class="text-c">
-					<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','{{ URL::route('manage.schedule.detail',['id'=>$val->id]) }}','{{$val->id}}')" title="查看">{{$val->title}}</u></td>
-					<td>
-						@if($val->active)
-							@foreach($val->active as $k=>$v)
-							{{$v}} |
-							@endforeach
-						@endif
-					</td>
-					<td>{{$val->sign_num}}</td>
-					<td class="f-14 td-manage">
-						@if($val->channel=='personal')
-							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('invite',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-						@else
-							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('invite',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
-						@endif
-						<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'{{$val->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
-					</td>
-				</tr>
+					<tr class="text-c">
+						<td><input type="checkbox" value="{{$val->id}}" name="id"></td>
+						<td>{{$val->id}}</td>
+						<td>{{$val->truename}}</td>
+						<td>{{$val->type}}</td>
+						<td>{{$val->created_at}}</td>
+						<td>{{$val->order_num}}</td>
+						<td>{{$val->order_amount}}</td>
+					</tr>
 				@endforeach
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
+	<div style="margin: 10px; float: right;">
+		<button  class="btn btn-primary radius" type="button" onclick="get_active()">确定</button>
+		<button  class="btn btn-danger radius" type="button" onclick="layer_close()">取消</button>
+	</div>
 @endsection
 @section('js')
-<script type="text/javascript" src="/lib/My97DatePicker/WdatePicker.js"></script> 
-<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/static/h-ui/js/auth.js"></script> 
-<script type="text/javascript">
-$('.table-sort').dataTable({
-	"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-	"bStateSave": true,//状态保存
-	"aoColumnDefs": [
-	  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable":false,"aTargets":[ 3 ]}// 不参与排序的列
-	]
-});
-
-function shiftStatus(id,status){
-	$.ajax({
-     	type: "GET",
-     	url: "{{ URL::route('manage.schedule.auth') }}",
-     	data: {
-     			id: id, 
-     			status: status
-     		},
-     	dataType: "json",
-     	success: function(data){
-        }
-    });
-    return true;
-}
-
-function doDelete(ids){
-	$.ajax({
-		type: "POST",
-		url: "{{ URL::route('manage.schedule.delete') }}",
-		data: {
-			ids: ids
-		},
-		dataType: "json",
-		success: function(data){
-		}
-	});
-	return true;
-}
-
-</script> 
+	<script type="text/javascript" src="/lib/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+	<script type="text/javascript">
+		$('.table-sort').dataTable({
+			"aaSorting": [[ 1, "desc" ]],//默认第几个排序
+			"bStateSave": true,//状态保存
+			"aoColumnDefs": [
+				// {"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+				{"orderable":false,"aTargets":[0,2]}// 不参与排序的列
+			]
+		});
+	</script>
 @endsection

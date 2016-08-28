@@ -75,7 +75,7 @@ class Admin extends Base
     {
         $params = Input::all();
         if (isset($params['name']) && !empty($params['name'])){
-            $lists = ManageM::where('name','like','%'.$params['name'].'%')->get();
+            $lists = ManageM::where('truename','like','%'.$params['name'].'%')->get();
         } else {
             $lists = ManageM::get();
         }
