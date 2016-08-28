@@ -71,7 +71,7 @@
 			var data = $(obj).parents('tr');
 			$.ajax({
 				type: "POST",
-				url: "{{ URL::route('manage.score.updateteamhistory') }}",
+				url: "{{ URL::route('invite') }}",
 				data: {
 					schedule_id : $('#schedule_id').val(),
 					team_one_id : data.find('input[name="team_one_id"]').val(),

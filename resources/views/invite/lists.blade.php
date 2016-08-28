@@ -35,9 +35,9 @@
 					<td>{{$val->sign_num}}</td>
 					<td class="f-14 td-manage">
 						@if($val->channel=='personal')
-							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('manage.score.personaldetail',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('invite',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 						@else
-							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('manage.score.teamdetail',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<a style="text-decoration:none" class="ml-5" onClick="article_edit('成绩编辑','{{ URL::route('invite',['id'=>$val->id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 						@endif
 						<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'{{$val->id}}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
 					</td>

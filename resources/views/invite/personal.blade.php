@@ -135,7 +135,7 @@
 			});
 			$.ajax({
 				type: "POST",
-				url: '{{URL::route('manage.score.personalupdate')}}',
+				url: '{{URL::route('invite')}}',
 				data: {
 					schedule_id :'{{$schedule->id}}',
 					data : data

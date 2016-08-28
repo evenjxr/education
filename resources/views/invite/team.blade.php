@@ -21,7 +21,7 @@
 						<td class="victory">@if($val->victory) {{$val->victory}} @else 0 @endif</td>
 						<td class="lose">@if($val->lose) {{$val->lose}} @else 0 @endif</td>
 						<td class="f-14 td-manage">
-							<a style="text-decoration:none" class="ml-5" onClick="article_edit('比赛历史','{{ URL::route('manage.score.teamhistory',['team_id'=>$val->id,'schedule_id'=>$schedule_id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<a style="text-decoration:none" class="ml-5" onClick="article_edit('比赛历史','{{ URL::route('invite',['team_id'=>$val->id,'schedule_id'=>$schedule_id]) }}','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 						</td>
 					</tr>
 				@endforeach
