@@ -102,14 +102,14 @@ Route::group(['prefix' => 'order'], function () {
     Route::post('server/add', ['uses' => 'Order@serverAdd']);
 
     Route::get('server/detail', ['uses' => 'Order@serverDetail']);
-    
-    
+
+    Route::post('server/auth', ['uses' => 'Order@serverAuth']);
+
     
     Route::get('server/fee', ['uses' => 'Order@serverFee']);
     
     Route::get('teacher/fee', ['uses' => 'Order@teacherFee']);
-    
-    
+
 
     Route::post('equipment/add', ['uses' => 'Order@equipmentAdd']);
 
@@ -118,6 +118,8 @@ Route::group(['prefix' => 'order'], function () {
     Route::get('equipment/detail', ['uses' => 'Order@equipmentDetail']);
 
     Route::get('equipment/has', ['uses' => 'Order@hasEquipment']);
+
+    Route::post('equipment/auth', ['uses' => 'Order@equipmentAuth']);
 });
 
 

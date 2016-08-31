@@ -102,7 +102,7 @@ class Account extends Controller
     private function insertInviteCode($user,$type)
     {
         $code = $invite_code = $this->make_coupon_card();
-        InviteCodeM::forceCreate([
+        InviteCodeM::firstOrCreate([
             'code' => $code,
             'type' => $type,
             'user_id' => $user->id

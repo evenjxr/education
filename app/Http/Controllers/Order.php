@@ -40,7 +40,20 @@ class Order extends Controller
         return response()->json(['success'=>'Y','msg'=>'','data'=>$server]);
     }
 
-    
+    public function serverAuth(Request $request)
+    {
+        $this->userInfo($request);
+        $param = Input::all();
+        $flag = ServerM::find($param['id'])->update(['status'=>$param['status']]);
+        if ($flag) {
+            return response()->json(['success'=>'Y','msg'=>'修改成功']);
+        } else {
+            return response()->json(['success'=>'N','msg'=>'修改失败']);
+        }
+    }
+
+
+
     public function equipmentList(Request $request)
     {
         $this->userInfo($request);
@@ -60,6 +73,19 @@ class Order extends Controller
         $equipment = EquipmentM::find($id);
         return response()->json(['success'=>'Y','msg'=>'','data'=>$equipment]);
     }
+
+    public function equipmentAuth(Request $request)
+    {
+        $this->userInfo($request);
+        $param = Input::all();
+        $flag = EquipmentM::find($param['id'])->update(['status'=>$param['status']]);
+        if ($flag) {
+            return response()->json(['success'=>'Y','msg'=>'修改成功']);
+        } else {
+            return response()->json(['success'=>'N','msg'=>'修改失败']);
+        }
+    }
+
 
 
     public function serverAdd(Request $request)

@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Models\Institution;
+use App\Models\Student;
 use Input;
 use Session;
 
 use App\Models\Server as ServerM;
 use App\Models\Teacher as TeacherM;
 use App\Models\Manage as ManageM;
+use App\Models\Institution as InstitutionM;
 use App\Models\Equipment as EquipmentM;
+use App\Models\InviteRecord as InviteRecordM;
 
 class Server extends Controller
 {
@@ -59,10 +63,35 @@ class Server extends Controller
      //    if ($flag) return $this->detail($flag->id)->with('success', '新增成功');
     }
 
-    public function detail($id)
+    public function detail()
     {
-        // $server = AM::find($id);
-        // return view('server.detail',['server'=>$server,'channel'=>AM::channel(),'standard'=>$this->standard]);
+        $id = Input::get('id');
+        $server = ServerM::leftjoin('manages','manages.id','=','servers.manage_id')
+            ->leftjoin('students','students.id','=','servers.user_id')
+            ->where('servers.id',$id)
+            ->select('students.truename as student_name','manages.truename as manage_name','servers.*')
+            ->first();
+        $server->teacher = TeacherM::find($server->teacher_id);
+        $TeacherInvite = InviteRecordM::where('type','teacher')->where('user_id',$server->teacher_id)->first();
+        if ($TeacherInvite) {
+            if ($TeacherInvite->type == 'student') {
+                $server->referrer = StudentM::where('invite_code',$TeacherInvite->code)->first();
+                $server->referrer = 'student';
+            } else if ($TeacherInvite->type == 'teacher') {
+                $server->referrer = TeacherM::where('invite_code',$TeacherInvite->code)->first();
+                $server->referrer = 'teacher';
+            } else if ($TeacherInvite->type == 'manage') {
+                $server->referrer = ManageM::where('invite_code',$TeacherInvite->code)->first();
+                $server->referrer = 'manage';
+            } else {
+                $server->referrer = InstitutionM::where('invite_code',$TeacherInvite->code)->first();
+                $server->referrer = 'institution';
+            }
+        } else {
+            $server->originTeacher = null;
+        }
+        dd($server);
+        return view('server.detail',['server'=>$server,'fee'=>$this->fee]);
     }
 
     public function update()
