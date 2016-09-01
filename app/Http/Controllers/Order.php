@@ -3,14 +3,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Manage\Student;
 use Illuminate\Http\Request;
 use Input;
 use Validator;
 
 use App\Models\Server as ServerM;
+use App\Models\Student as StudentM;
 use App\Models\Teacher as TeacherM;
+use App\Models\Manage as ManageM;
 use App\Models\Equipment as EquipmentM;
-
 
 
 class Order extends Controller
@@ -37,6 +39,24 @@ class Order extends Controller
         $this->userInfo($request);
         $id = Input::get('id');
         $server = ServerM::find($id);
+        $teacher = TeacherM::find($server->teacher_id,['truename']);
+        $student = StudentM::find(5);
+        $manage = ManageM::find($server->manage_id);
+
+        $server->manage_name = $manage->truename;
+        $server->grade = isset($student->grade) ? $this->grades[$student->grade] : '';
+        $server->student_state = '';
+        $state = '';
+        foreach(unserialize($student->state) as $key=>$value){
+            $state = $state.' '.$this->state[$value];
+        }
+        $server->student_state = $state;
+        $server->teacher_extra_server_fee = $teacher->extra_server_fee;
+        $server->teacher_name = $teacher->truename;
+        $server->homework_fee = $this->fee['homework_fee'];
+        $server->prepare_fee = $this->fee['prepare_fee'];
+        $server->equipment_fee = $this->fee['equipment_fee'];
+
         return response()->json(['success'=>'Y','msg'=>'','data'=>$server]);
     }
 
@@ -51,7 +71,6 @@ class Order extends Controller
             return response()->json(['success'=>'N','msg'=>'修改失败']);
         }
     }
-
 
 
     public function equipmentList(Request $request)
@@ -87,13 +106,15 @@ class Order extends Controller
     }
 
 
-
     public function serverAdd(Request $request)
     {
         $this->userInfo($request);
         $this->validateServer($request);
         $param = Input::all();
-        $param['user_id'] = $this->userInfo->id;
+        $student = StudentM::where('mobile',$param['mobile'])->first();
+        $param['user_id'] = $student->id;
+        $param['teacher_id'] = $student->teacher_id;
+        $param['sn'] = $this->build_order_no();
         $flag = ServerM::firstOrCreate($param);
         if ($flag) {
             return response()->json(['success'=>'Y','msg'=>'下单成功']);
@@ -109,6 +130,9 @@ class Order extends Controller
         $param = Input::all();
         $param['sn'] = $this->build_order_no();
         $param['user_id'] = $this->userInfo->id;
+        if ($this->type == 'student') {
+            $param['teacher_id'] && $this->userInfo->update(['teacher_id'=>$param['teacher_id']]);
+        }
         unset($param['city']); unset($param['province']);
         $flag = EquipmentM::firstOrCreate($param);
         if ($flag) {
@@ -117,7 +141,6 @@ class Order extends Controller
             return response()->json(['success'=>'N','msg'=>'预约失败']);
         }
     }
-
 
     private function build_order_no(){
         return date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
@@ -141,7 +164,7 @@ class Order extends Controller
     {
         $this->userInfo($request);
         $mobile = Input::get('mobile');
-        $teacher_id = EquipmentM::where('mobile',$mobile)->first()['teacher_id'];
+        $teacher_id = StudentM::where('mobile',$mobile)->first()['teacher_id'];
         $teacher = TeacherM::find($teacher_id,['extra_server_fee']);
         if ($teacher_id && $teacher) {
             return response()->json(['success'=>'Y','msg'=>'','data'=>$teacher]);
@@ -150,7 +173,7 @@ class Order extends Controller
         }
     }
 
-    public function serverFee(Request $request)
+    public function staticFee(Request $request)
     {
         $this->userInfo($request);
         return response()->json(['success'=>'Y','msg'=>'','data'=>$this->fee]);

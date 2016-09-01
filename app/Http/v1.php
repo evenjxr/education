@@ -108,7 +108,7 @@ Route::group(['prefix' => 'order'], function () {
     Route::post('server/auth', ['uses' => 'Order@serverAuth']);
 
     
-    Route::get('server/fee', ['uses' => 'Order@serverFee']);
+    Route::get('static/fee', ['uses' => 'Order@staticFee']);
     
     Route::get('teacher/fee', ['uses' => 'Order@teacherFee']);
 

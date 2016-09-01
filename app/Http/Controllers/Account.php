@@ -82,7 +82,7 @@ class Account extends Controller
             ]);
 
         if ($user) {
-            $this->insertInviteCode($user,$param['type']);
+            $user->update(['invite_code'=>$this->makeCode()]);
             $token = LTM::makeToken();
             LTM::saveToken($user, $param['type'], $token);
             $data = [
@@ -99,16 +99,6 @@ class Account extends Controller
         }
     }
 
-    private function insertInviteCode($user,$type)
-    {
-        $code = $invite_code = $this->make_coupon_card();
-        InviteCodeM::firstOrCreate([
-            'code' => $code,
-            'type' => $type,
-            'user_id' => $user->id
-        ]);
-        return;
-    }
 
     private function insertInvite($user,$type,$code)
     {
@@ -197,7 +187,7 @@ class Account extends Controller
     }
 
 
-    public function make_coupon_card()
+    public function makeCode()
     {
         $code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $rand = $code[rand(0,25)]
