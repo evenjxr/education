@@ -108,6 +108,8 @@ abstract class Controller extends BaseController
     public $status = ['认证失败','待认证','已认证'];
     
     public $orderStatus = [1=>'未支付',2=>'已支付',3=>'取消订单',4=>'退款'];
+
+    public $equipmentStatus = [1=>'待上们安装',2=>'已安装完成',3=>'客户已取消'];
     
     public $fee = [        
         'homework_fee' => 300,

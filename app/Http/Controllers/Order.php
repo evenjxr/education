@@ -80,7 +80,7 @@ class Order extends Controller
         $equipment = EquipmentM::where('address_id',$user_address_id)
             ->get(['id','created_at','link_name','status','mobile','sn']);
         foreach ($equipment as $key => $value){
-            $value->status && $equipment[$key]->status = $this->orderStatus[$value->status];
+            $value->status && $equipment[$key]->status = $this->equipmentStatus[$value->status];
         }
         return response()->json(['success'=>'Y','msg'=>'','data'=>$equipment]);
     }
