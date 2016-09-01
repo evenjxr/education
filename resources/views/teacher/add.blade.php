@@ -65,15 +65,18 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">城市：</label>
-			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-				<select class="select" name="address" size="1">
-					<option value="0">请选择城市</option>
-					@foreach($addresses as $key=>$val)
-						<option value="{{$key}}" name="address[]" >{{$val}}</option>
-					@endforeach
-				</select>
-				</span> </div>
+			<label class="form-label col-xs-2 col-sm-2">选择省份：</label>
+			<div class="formControls col-md-3 col-sm-3"> <span class="select-box" style="width:150px;">
+			<select class="select province"  size="1">
+				<option >请选择省份</option>
+			</select>
+			</span> </div>
+			<label class="form-label col-xs-2 col-sm-3">选择城市：</label>
+			<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
+			<select class="select city" name="address_id" size="1">
+				<option value="0">请选择城市</option>
+			</select>
+			</span> </div>
 		</div>
 
 		<div class="row cl">
@@ -217,6 +220,50 @@ $(function(){
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);
 		}
+	});
+	var address;
+	$.ajax({
+		type: "GET",
+		url: "{{URL::route('manage.address.lists') }}",
+		data: {},
+		dataType: "json",
+		success: function(data){
+			address = data.data;
+			console.log(address);
+			getProvince(address);
+		}
+	});
+
+	function getProvince(address) {
+		var province = new Array();
+		var tempProvice = '';
+		$.each(address,function (name,value) {
+			if(value.province != tempProvice){
+				province.push(value.province);
+				tempProvice = value.province;
+			}
+		});
+		var html = '';
+		$.each(province,function (index,value) {
+			html += "<option value='"+value+"' >"+value+"</option>";
+		});
+		$('.province').append(html);
+	}
+
+	$('.province').change(function () {
+		var province = $(this).val();
+		var cities = [];
+		$('.city').empty();
+		$.each(address,function (index,value) {
+			if(value.province == province){
+				cities.push(value);
+			}
+		});
+		var html = '';
+		$.each(cities,function (index,value) {
+			html += "<option value='"+value.id+"' >"+value.city+"</option>";
+		});
+		$('.city').append(html);
 	});
 });
 </script> 

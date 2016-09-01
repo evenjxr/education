@@ -8,6 +8,7 @@ use Session;
 
 use App\Models\Equipment as EquipmentM;
 use App\Models\Address as AddressM;
+use App\Models\Student as StudentM;
 
 class Equipment extends Controller
 {
@@ -58,7 +59,9 @@ class Equipment extends Controller
     {
         $id = Input::get('id');
         $equipment = EquipmentM::find($id);
-        return view('equipment.detail',['equipment'=>$equipment]);
+        $address = AddressM::find($equipment->address_id);
+        $equipment->truename = StudentM::find($equipment->user_id)['truename'];
+        return view('equipment.detail',['equipment'=>$equipment,'address'=>$address]);
     }
 
     public function update()

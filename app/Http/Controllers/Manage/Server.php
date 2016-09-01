@@ -76,30 +76,34 @@ class Server extends Controller
         if ($TeacherInvite) {
             if ($TeacherInvite->type == 'student') {
                 $server->referrer = StudentM::where('invite_code',$TeacherInvite->code)->first();
-                $server->referrer = 'student';
+                $server->referrer->type = 'student';
             } else if ($TeacherInvite->type == 'teacher') {
                 $server->referrer = TeacherM::where('invite_code',$TeacherInvite->code)->first();
-                $server->referrer = 'teacher';
+                $server->referrer->type = 'teacher';
             } else if ($TeacherInvite->type == 'manage') {
                 $server->referrer = ManageM::where('invite_code',$TeacherInvite->code)->first();
-                $server->referrer = 'manage';
+                $server->referrer->type = 'manage';
             } else {
                 $server->referrer = InstitutionM::where('invite_code',$TeacherInvite->code)->first();
-                $server->referrer = 'institution';
+                $server->referrer->type = 'institution';
             }
         } else {
             $server->originTeacher = null;
         }
-        dd($server);
         return view('server.detail',['server'=>$server,'fee'=>$this->fee]);
     }
 
     public function update()
     {
-        // $params = Input::all();
-        // $server = AM::find($params['id']);
-        // $server->update($params);
-        // if ($server) return $this->detail($server->id)->with('success', '修改成功');
+        $params = Input::all();
+        $server = ServerM::find($params['id']);
+        $extra_server_fee = TeacherM::find($server->teacher_id)['extra_server_fee'];
+        $params['total_fee'] = $params['homework_server'] * $this->fee['homework_fee'] +
+                                $params['prepare_server'] * $this->fee['prepare_fee'] +
+                                $params['equipment'] * $this->fee['equipment_fee'] +
+                                $params['extra_server'] * $extra_server_fee;
+        $server->update($params);
+        if ($server) return $this->detail($server->id)->with('success', '修改成功');
     }
 
     public function auth()

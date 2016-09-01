@@ -33,7 +33,7 @@
 				<td>{{$val->id}}</td>
 				<td>{{$val->truename}}</td>
 				<td>{{$val->mobile}}</td>
-				<td>{{ $val->address_id ? $addresses[$val->address_id] : ''}}</td>
+				<td>{{$val->address}}</td>
 				<td>{{$val->created_at}}</td>
 				<td class="td-status">
 					@if($val->status)

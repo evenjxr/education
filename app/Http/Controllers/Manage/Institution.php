@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Manage;
 use App\Http\Controllers\Controller;
 use Input;
 use App\Models\Institution as InstitutionM;
+use App\Models\Address as AddressM;
+
 
 class Institution extends Controller
 {
@@ -46,11 +48,13 @@ class Institution extends Controller
     public function detail($id)
     {
         $institution = InstitutionM::find($id);
-        return view('institution.detail',['institution'=>$institution,'addresses'=>$this->addresses]);
+        $address = AddressM::find($institution->address_id);
+        return view('institution.detail',['institution'=>$institution,'address'=>$address]);
     }
 
     public function update()
     {
+        $params = Input::all();
         $institution = InstitutionM::find($params['id']);
         $institution->update($params);
         if ($institution) return $this->detail($institution->id)->with('success', '修改成功');

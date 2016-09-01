@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Input;
 use Session;
 use App\Models\Manage as ManageM;
+use App\Models\Address as AddressM;
 
-class Admin extends Base
+class Admin extends Controller
 {
     public function index()
     {
@@ -38,13 +39,14 @@ class Admin extends Base
             $params['password'] = md5($params['password']);
         }
         $flag = ManageM::create($params);
-        if ($flag) return $this->detail($flag->id);
+        if ($flag) return $this->detail($flag->id)->with('success', '修改成功');
     }
 
     public function detail($id)
     {
         $admin = ManageM::find($id);
-        return view('admin.detail',['admin'=>$admin,'addresses'=>$this->addresses]);   
+        $address = AddressM::find($admin->address_id);
+        return view('admin.detail',['admin'=>$admin,'address'=>$address]);
     }
 
     public function update()
@@ -79,7 +81,15 @@ class Admin extends Base
         } else {
             $lists = ManageM::get();
         }
-        return view('admin.lists',['lists'=>$lists,'addresses'=>$this->addresses]);
+        foreach ($lists as $key=>$value){
+            if ($lists[$key]->address_id) {
+                $address = AddressM::find($lists[$key]->address_id);
+                $lists[$key]->address = $address->province.' '.$address->city;
+            } else {
+                $lists[$key]->address = '';
+            }
+        }
+        return view('admin.lists',['lists'=>$lists]);
     }
 
     public function delete()

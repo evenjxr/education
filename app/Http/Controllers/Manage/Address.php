@@ -16,7 +16,7 @@ class Address extends Controller
         return response()->json(['success'=>'Y','msg'=>'', 'data'=>$province]);
     }
 
-    public function insert()
+    public function inssert()
     {
         $string = '河北省： 石家庄 保定市 秦皇岛 唐山市 邯郸市 邢台市 沧州市 承德市 廊坊市 衡水市 张家口 
 山西省： 太原市 大同市 阳泉市 长治市 临汾市 晋中市 运城市 晋城市 忻州市 朔州市 吕梁市 
@@ -30,8 +30,8 @@ class Address extends Controller
 吉林省： 吉林市 通化市 白城市 四平市 辽源市 松原市 白山市 
 黑龙江省： 伊春市 牡丹江 大庆市 鸡西市 鹤岗市 绥化市 双鸭山 七台河 佳木斯 黑河市 齐齐哈尔市 
 江苏省： 无锡市 常州市 扬州市 徐州市 苏州市 连云港 盐城市 淮安市 宿迁市 镇江市 南通市 泰州市 
-浙江省： 绍兴市 温州市 湖州市 嘉兴市 台州市 金华市 舟山市 衢州市 丽水市 安徽省： 
-合肥市 芜湖市 亳州市 马鞍山 池州市 淮南市 淮北市 蚌埠市 巢湖市 安庆市 宿州市 宣城市 滁州市 黄山市 六安市 阜阳市 铜陵市 
+浙江省： 绍兴市 温州市 湖州市 嘉兴市 台州市 金华市 舟山市 衢州市 丽水市 安徽省 
+合肥市： 芜湖市 亳州市 马鞍山 池州市 淮南市 淮北市 蚌埠市 巢湖市 安庆市 宿州市 宣城市 滁州市 黄山市 六安市 阜阳市 铜陵市 
 福建省： 福州市 泉州市 漳州市 南平市 三明市 龙岩市 莆田市 宁德市 
 江西省： 南昌市 赣州市 景德镇 九江市 萍乡市 新余市 抚州市 宜春市 上饶市 鹰潭市 吉安市 
 山东省： 潍坊市 淄博市 威海市 枣庄市 泰安市 临沂市 东营市 济宁市 烟台市 菏泽市 日照市 德州市 聊城市 滨州市 莱芜市 
@@ -54,18 +54,18 @@ class Address extends Controller
 澳门特别行政区： 澳门半岛 澳门离岛
 台湾： 基隆市 台中市 新竹市 台南市 嘉义市 高雄市';
 
-//        $arr1 =  explode("\n",$string);
-//
-//        foreach ($arr1 as $key => $value) {
-//            $insertData = [];
-//            $arr2 = explode("： ",$value);
-//            $arr3 = explode(" ",$arr2[1]);
-//            array_pop($arr3);
-//            foreach($arr3 as $k=>$v){
-//                $insertData[] = ['province'=>$arr2[0],'city'=>$v];
-//            }
-//            AddressM::insert($insertData);
-//        }
+        $arr1 =  explode("\n",$string);
+
+        foreach ($arr1 as $key => $value) {
+            $insertData = [];
+            $arr2 = explode("： ",$value);
+            $arr3 = explode(" ",$arr2[1]);
+            array_pop($arr3);
+            foreach($arr3 as $k=>$v){
+                $insertData[] = ['province'=>$arr2[0],'city'=>$v];
+            }
+            AddressM::insert($insertData);
+        }
     }
 
 

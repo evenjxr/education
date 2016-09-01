@@ -14,7 +14,6 @@
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="40">ID</th>
-					<th width="100">账号</th>
 					<th width="100">真是姓名</th>
 					<th width="100">年龄</th>
 					<th width="60">学校</th>
@@ -29,12 +28,11 @@
 					<tr class="text-c">
 						<td><input type="checkbox" value="1" name=""></td>
 						<td>{{$val->id}}</td>
-						<td><u style="cursor:pointer" class="text-primary" onclick="member_show('张三','{{ URL::route('manage.teacher.show',['id'=>$val->id]) }}','10001','360','400')">{{$val->username}}</u></td>
-						<td>{{$val->turename ? :''}}</td>
+						<td>{{$val->truename ? :''}}</td>
 						<td>{{$val->age}}</td>
 						<td>{{$val->school_name}}</td>
 						<td>{{$val->mobile}}</td>
-						<td>{{$val->address?$addresses[$val->address]:''}}</td>
+						<td>{{$val->address}}</td>
 						<td>{{$val->created_at}}</td>
 						<td class="td-manage">
 							<a onClick="member_sms(this,{{$val->id}})" href="javascript:;" title="发送短信" style="text-decoration:none" class="ml-5" ><i class="Hui-iconfont">&#xe68a;</i></a>

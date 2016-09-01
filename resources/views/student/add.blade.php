@@ -47,21 +47,18 @@
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-3 col-sm-2">选择省份：</label>
+			<label class="form-label col-xs-2 col-sm-2">选择省份：</label>
 			<div class="formControls col-md-3 col-sm-3"> <span class="select-box" style="width:150px;">
-				<select class="select"  size="1">
-					<option class="province">请选择省份</option>
-				</select>
-				</span> </div>
-			<label class="form-label col-xs-3 col-sm-2">选择城市：</label>
+			<select class="select province"  size="1">
+				<option >请选择省份</option>
+			</select>
+			</span> </div>
+			<label class="form-label col-xs-2 col-sm-3">选择城市：</label>
 			<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
-				<select class="select" name="address_id" size="1">
-					<option value="0">请选择城市</option>
-					@foreach($addresses as $key=>$val)
-						<option value="{{$key}}">{{$val}}</option>
-					@endforeach
-				</select>
-				</span> </div>
+			<select class="select city" name="address_id" size="1">
+				<option value="0">请选择城市</option>
+			</select>
+			</span> </div>
 		</div>
 
 		<div class="row cl">
@@ -96,39 +93,39 @@
 <script type="text/javascript" src="http://lib.h-ui.net/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="http://lib.h-ui.net/jquery.validation/1.14.0/messages_zh.min.js"></script> 
 <script type="text/javascript">
-$(function(){
+$(function() {
 	$('.skin-minimal input').iCheck({
 		checkboxClass: 'icheckbox-blue',
 		radioClass: 'iradio-blue',
 		increaseArea: '20%'
 	});
-	
+
 	$("#form-admin-add").validate({
-		rules:{
-			username:{
-				required:true,
-				minlength:2,
-				maxlength:8
+		rules: {
+			username: {
+				required: true,
+				minlength: 2,
+				maxlength: 8
 			},
-			mobile:{
-				required:true,
-				isPhone:true,
+			mobile: {
+				required: true,
+				isPhone: true,
 			},
-			school_name:{
-				required:true,
-				minlength:2,
+			school_name: {
+				required: true,
+				minlength: 2,
 			},
-			age:{
-				required:true,
+			age: {
+				required: true,
 			},
-			grade:{
-				required:true,
+			grade: {
+				required: true,
 			}
 		},
-		onkeyup:false,
-		focusCleanup:true,
-		success:"valid",
-		submitHandler:function(form){
+		onkeyup: false,
+		focusCleanup: true,
+		success: "valid",
+		submitHandler: function (form) {
 			$(form).ajaxSubmit();
 			var index = parent.layer.getFrameIndex(window.name);
 			parent.$('.btn-refresh').click();
@@ -136,39 +133,52 @@ $(function(){
 		}
 	});
 
-	var address = {};
-
-
+	var address;
 	$.ajax({
 		type: "GET",
 		url: "{{URL::route('manage.address.lists') }}",
 		data: {},
 		dataType: "json",
-		success: function(data){
+		success: function (data) {
 			address = data.data;
+			console.log(address);
 			getProvince(address);
 		}
 	});
-});
+
 	function getProvince(address) {
 		var province = new Array();
-		$.each(address,function (name,value) {
-			province.push(value.province);
+		var tempProvice = '';
+		$.each(address, function (name, value) {
+			if (value.province != tempProvice) {
+				province.push(value.province);
+				tempProvice = value.province;
+			}
 		});
-		$.unique(province);
 		var html = '';
-		$.each(province,function (index,value) {
-			html += "<option value='"+index+"' >"+value+"</option>";
+		$.each(province, function (index, value) {
+			html += "<option value='" + value + "' >" + value + "</option>";
 		});
-		console.log(html);
-		//$('.province').append(html);
+		$('.province').append(html);
 	}
 
 	$('.province').change(function () {
-		console.log(123);
+		var province = $(this).val();
+		var cities = [];
+		$('.city').empty();
+		$.each(address, function (index, value) {
+			if (value.province == province) {
+				cities.push(value);
+			}
+		});
+		var html = '';
+		$.each(cities, function (index, value) {
+			html += "<option value='" + value.id + "' >" + value.city + "</option>";
+		});
+		$('.city').append(html);
 	});
 
-
+});
 
 </script> 
 @endsection

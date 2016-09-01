@@ -137,9 +137,9 @@ Route::group(['prefix' => 'server'], function () {
 
     Route::get('auth',['uses' => 'Manage\Server@auth', 'as' => 'manage.server.auth']);
 
-    Route::get('add',['uses' => 'Manage\Server@add', 'as' => 'manage.server.add']);
+    Route::post('add',['uses' => 'Manage\Server@add', 'as' => 'manage.server.add']);
 
-    Route::get('update',['uses' => 'Manage\Server@updatae', 'as' => 'manage.server.update']);
+    Route::post('update',['uses' => 'Manage\Server@update', 'as' => 'manage.server.update']);
 
     Route::get('detail',['uses' => 'Manage\Server@detail', 'as' => 'manage.server.detail']);
 

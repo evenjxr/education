@@ -118,6 +118,8 @@
 						parent.layer.close(index);
 					}
 				});
+
+
 				var address;
 				$.ajax({
 					type: "GET",
@@ -126,11 +128,10 @@
 					dataType: "json",
 					success: function(data){
 						address = data.data;
-						console.log(address);
 						getProvince(address);
+						getcity(address);
 					}
 				});
-
 
 				function getProvince(address) {
 					var province = new Array();
@@ -143,9 +144,33 @@
 					});
 					var html = '';
 					$.each(province,function (index,value) {
-						html += "<option value='"+value+"' >"+value+"</option>";
+						if (value == "{{$address->province}}" ) {
+							html += "<option value='"+value+"' selected='selected'>"+value+"</option>";
+						} else {
+							html += "<option value='"+value+"' >"+value+"</option>";
+						}
 					});
 					$('.province').append(html);
+				}
+
+				function getcity (address) {
+					var province = $('.province').val();
+					var cities = [];
+					$('.city').empty();
+					$.each(address,function (index,value) {
+						if(value.province == province){
+							cities.push(value);
+						}
+					});
+					var html = '';
+					$.each(cities,function (index,value) {
+						if (value.id == '{{$address->id}}') {
+							html += "<option value='"+value.id+"' selected='selected'>"+value.city+"</option>";
+						} else {
+							html += "<option value='"+value.id+"' >"+value.city+"</option>";
+						}
+					});
+					$('.city').append(html);
 				}
 
 				$('.province').change(function () {
@@ -163,8 +188,6 @@
 					});
 					$('.city').append(html);
 				});
-
-
 
 			});
 

@@ -6,12 +6,13 @@ use Input;
 use Session;
 use App\Extra\SMS;
 use App\Models\Student as StudentM;
+use App\Models\Address as AddressM;
 
 class Student extends Base
 {
     public function add()
     {
-        return view('student.add',['grade'=>$this->grade,'addresses'=>$this->addresses]);
+        return view('student.add',['grade'=>$this->grade]);
     }
 
     public function store()
@@ -25,7 +26,8 @@ class Student extends Base
     public function detail($id)
     {
         $student = StudentM::find($id);
-        return view('student.detail',['student'=>$student,'addresses'=>$this->addresses,'grade'=>$this->grade]);
+        $address = AddressM::find($student->address_id);
+        return view('student.detail',['student'=>$student,'address'=>$address,'grade'=>$this->grade]);
     }
 
     public function update()

@@ -14,6 +14,8 @@ Route::get('menu', ['uses' => 'Api@menu', 'as' => 'api.menu']);
 
 //});
 
+Route::get('address/add', ['uses' => 'Manage\Address@insert']);
+
 Route::group(['prefix' => 'common'], function () {
 
     Route::get('schoolwork', ['uses' => 'Common@getSchoolWork']);

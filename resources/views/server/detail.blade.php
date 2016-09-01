@@ -4,64 +4,81 @@
 	<article class="page-container">
 		<form class="form form-horizontal" id="form-admin-add" method="post" action="{{ URL::route('manage.server.update') }}">
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>下单电话：</label>
-				<div class="formControls col-xs-7 col-sm-9">
+				<label class="form-label col-xs-2 col-sm-2">下单电话：</label>
+				<div class="formControls col-xs-3 col-sm-3">
 					<input type="text" class="input-text" value="{{$server->mobile}}" placeholder="" name="mobile">
 				</div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">学生姓名：</label>
-				<div class="formControls col-xs-7 col-sm-9">
-					<input type="text" class="input-text" value="{{$server->student_name}}" placeholder="">
-				</div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">作业辅导：</label>
-				<div class="formControls col-xs-7 col-sm-9">
+				<label class="form-label col-xs-2 col-sm-2">作业辅导：</label>
+				<div class="formControls col-xs-3 col-sm-3">
 					<input type="text" class="input-text" value="{{$server->homework_server}}" placeholder="" name="homework_server">
 				</div>
 			</div>
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">预习/复习：</label>
-				<div class="formControls col-xs-7 col-sm-9">
+				<label class="form-label col-xs-2 col-sm-2">预习/复习：</label>
+				<div class="formControls col-xs-3 col-sm-3">
 					<input type="text" class="input-text" value="{{$server->prepare_server}}" placeholder="" name="prepare_server">
 				</div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">补习：</label>
-				<div class="formControls col-xs-7 col-sm-9">
+				<label class="form-label col-xs-2 col-sm-2">补习：</label>
+				<div class="formControls col-xs-3 col-sm-3">
 					<input type="text" class="input-text" value="{{$server->extra_server}}" placeholder="" name="extra_server">
 				</div>
 			</div>
+
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">预约老师：</label>
-				<div class="formControls col-xs-7 col-sm-9">
-					<input type="text" class="input-text">{{$server->teacher->truename}} </p>
+				<label class="form-label col-xs-2 col-sm-2">学生姓名：</label>
+				<div class="formControls col-xs-3 col-sm-3">
+					<input type="text" class="input-text" value="{{$server->student_name}}">
+				</div>
+				<label class="form-label col-xs-2 col-sm-2">预约老师：</label>
+				<div class="col-xs-3 col-sm-3">
+					<input type="text" class="input-text" value="{{$server->teacher->truename}}">
+				</div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">预约老师电话：</label>
+				<div class="formControls col-xs-3 col-sm-3">
+					<input type="text" class="input-text" value="{{$server->teacher->mobile}}">
+				</div>
+				<label class="form-label col-xs-2 col-sm-2">推荐人：</label>
+				<div class="col-xs-3 col-sm-3">
+					<input type="text" class="input-text" value="{{$server->referrer->type}} -- {{$server->referrer->truename}}">
+				</div>
+			</div>
+
+			<div class="row cl">
+				<label class="form-label col-xs-2 col-sm-2">推荐人电话：</label>
+				<div class="formControls col-xs-3 col-sm-3">
+					<input type="text" class="input-text" value="{{$server->referrer->mobile}}">
+				</div>
+				<label class="form-label col-xs-2 col-sm-2">外勤人员：</label>
+				<div class="col-xs-3 col-sm-3">
+					<input type="text" class="input-text" value="{{$server->manage_name}}">
 				</div>
 			</div>
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">推荐人：</label>
-				<div class="formControls col-xs-7 col-sm-9">
-					<p type="text" class="input-text" >{{$server->referrer}}</p>
+				<label class="form-label col-xs-2 col-sm-2">设备台数：</label>
+				<div class="formControls col-xs-3 col-sm-3">
+					<input type="text" class="input-text" name="equipment" value="{{$server->equipment}}">
 				</div>
 			</div>
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">外勤人员：</label>
-				<div class="formControls col-xs-7 col-sm-9">
-					<p type="text" class="input-text" >{{$server->manage_name}}</p>
+				<label class="form-label col-xs-2 col-sm-2">价格：</label>
+				<div class="formControls col-xs-7 col-sm-7" style="padding: 10px 20px; border: 1px solid #ccc;background: #00b7ee;margin-left:15px;color: #ff5500">
+						{{ $server->equipment }} * {{$fee['equipment_fee']}} +
+						{{ $server->homework_server }} * {{$fee['homework_fee']}} +
+						{{ $server->prepare_server }} * {{$fee['prepare_fee']}} +
+						{{ $server->extra_server }} * {{$server->teacher->extra_server_fee}} =
+						{{ $server->total_fee }}  元
+						</br>
+						支付老师 {{ $server->total_fee*0.99 }}  元
+						</br>
+						推荐费用 {{$server->total_fee*0.01}}  元
 				</div>
 			</div>
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">价格：</label>
-				<div class="formControls col-xs-7 col-sm-9">
-					<p class="c-red">
-						1111
-					</p>
-				</div>
-			</div>
-			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2">评价：</label>
-				<div class="formControls col-xs-7 col-sm-9">
+				<label class="form-label col-xs-2 col-sm-2">评价：</label>
+				<div class="formControls col-xs-8 col-sm-8">
 					<textarea cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" name="comment" nullmsg="备注不能为空！" onKeyUp="textarealength(this,200)">{{$server->comment}}</textarea>
 					<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
 				</div>
@@ -69,7 +86,8 @@
 			<input name="id" value="{{$server->id}}" type="hidden">
 			<div class="row cl">
 				<div class="col-xs-7 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-					<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+					<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+					<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 				</div>
 			</div>
 		</form>

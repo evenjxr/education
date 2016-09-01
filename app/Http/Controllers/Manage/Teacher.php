@@ -7,6 +7,7 @@ use Session;
 use App\Extra\SMS;
 use App\Models\Teacher as TeacherM;
 use App\Models\Institution as InstitutionM;
+use App\Models\Address as AddressM;
 
 class Teacher extends Base
 {
@@ -45,7 +46,8 @@ class Teacher extends Base
         $teacher->grades =   $teacher->grades ? unserialize($teacher->grades) : [];
         $teacher->work_time = $teacher->work_time ? unserialize($teacher->work_time) :[];
         $teacher->schoolwork = $teacher->schoolwork ? unserialize($teacher->schoolwork) : [];
-        return view('teacher.detail',['teacher'=>$teacher,'addresses'=>$this->addresses,'grade'=>$this->grade,'grades'=>$this->grades,'workTime'=>$this->workTime,'subjects'=>$this->subjects,'subject'=>$this->subject,'schoolwork'=>$this->schoolwork]);
+        $address = AddressM::find($teacher->address_id);
+        return view('teacher.detail',['teacher'=>$teacher,'addresses'=>$this->addresses,'grade'=>$this->grade,'grades'=>$this->grades,'workTime'=>$this->workTime,'subjects'=>$this->subjects,'subject'=>$this->subject,'schoolwork'=>$this->schoolwork,'address'=>$address]);
     }
 
     public function update()

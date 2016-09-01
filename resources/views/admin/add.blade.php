@@ -10,12 +10,6 @@
 		</div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员账号：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="" placeholder="" id="adminAccount" name="username">
-		</div>
-	</div>
-	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
 			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
@@ -34,13 +28,16 @@
 		</div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3">城市：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="address_id" size="1">
+		<label class="form-label col-xs-4 col-sm-3">选择省份：</label>
+		<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
+			<select class="select province"  size="1">
+				<option >请选择省份</option>
+			</select>
+			</span> </div>
+		<label class="form-label col-xs-4 col-sm-3">选择城市：</label>
+		<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
+			<select class="select city" name="address_id" size="1">
 				<option value="0">请选择城市</option>
-				@foreach($addresses as $key=>$val)
-					<option value="{{$key}}">{{$val}}</option>
-				@endforeach
 			</select>
 			</span> </div>
 	</div>
@@ -103,6 +100,51 @@ $(function(){
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);
 		}
+	});
+
+	var address;
+	$.ajax({
+		type: "GET",
+		url: "{{URL::route('manage.address.lists') }}",
+		data: {},
+		dataType: "json",
+		success: function(data){
+			address = data.data;
+			console.log(address);
+			getProvince(address);
+		}
+	});
+
+	function getProvince(address) {
+		var province = new Array();
+		var tempProvice = '';
+		$.each(address,function (name,value) {
+			if(value.province != tempProvice){
+				province.push(value.province);
+				tempProvice = value.province;
+			}
+		});
+		var html = '';
+		$.each(province,function (index,value) {
+			html += "<option value='"+value+"' >"+value+"</option>";
+		});
+		$('.province').append(html);
+	}
+
+	$('.province').change(function () {
+		var province = $(this).val();
+		var cities = [];
+		$('.city').empty();
+		$.each(address,function (index,value) {
+			if(value.province == province){
+				cities.push(value);
+			}
+		});
+		var html = '';
+		$.each(cities,function (index,value) {
+			html += "<option value='"+value.id+"' >"+value.city+"</option>";
+		});
+		$('.city').append(html);
 	});
 });
 </script> 

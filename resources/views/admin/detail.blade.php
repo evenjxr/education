@@ -11,12 +11,6 @@
 		</div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员账号：</label>
-		<div class="formControls col-xs-8 col-sm-9">
-			<input type="text" class="input-text" value="{{$admin->username}}" placeholder="" id="adminAccount" name="username">
-		</div>
-	</div>
-	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>初始密码：</label>
 		<div class="formControls col-xs-8 col-sm-9">
 			<input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
@@ -35,19 +29,18 @@
 		</div>
 	</div>
 	<div class="row cl">
-		<label class="form-label col-xs-4 col-sm-3">城市：</label>
-		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="address_id" size="1">
-				<option value="0">请选择城市</option>
-				@foreach($addresses as $key=>$val)
-					@if($key==$admin->address_id) 
-						<option value="{{$key}}" selected="selected">{{$val}}</option>
-					@else
-						<option value="{{$key}}">{{$val}}</option>
-					@endif
-				@endforeach
-			</select>
-			</span> </div>
+		<label class="form-label col-xs-4 col-sm-3">选择省份：</label>
+		<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
+		<select class="select province"  size="1">
+			<option >请选择省份</option>
+		</select>
+		</span> </div>
+		<label class="form-label col-xs-4 col-sm-3">选择城市：</label>
+		<div class="formControls col-md-2 col-sm-3"> <span class="select-box" style="width:150px;">
+		<select class="select city" name="address_id" size="1">
+			<option value="0">请选择城市</option>
+		</select>
+		</span> </div>
 	</div>
 	<div class="row cl">
 		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
@@ -70,34 +63,19 @@ $(function(){
 	
 	$("#form-admin-add").validate({
 		rules:{
-			name:{
+			truename:{
 				required:true,
 				minlength:2,
 				maxlength:8
 			},
-			account:{
-				required:true,
-				minlength:4,
-				maxlength:16
-			},
-			password:{
-				required:true,
-			},
-			password2:{
-				required:true,
-				equalTo: "#password"
-			},
 			mobile:{
 				required:true,
-				isPhone:true,
+				isPhone:true
 			},
-			email:{
+			addres_id:{
 				required:true,
-				email:true,
-			},
-			adminRole:{
-				required:true,
-			},
+				isNumber:true
+			}
 		},
 		onkeyup:false,
 		focusCleanup:true,
@@ -108,6 +86,75 @@ $(function(){
 			parent.$('.btn-refresh').click();
 			parent.layer.close(index);
 		}
+	});
+
+	var address;
+	$.ajax({
+		type: "GET",
+		url: "{{URL::route('manage.address.lists') }}",
+		data: {},
+		dataType: "json",
+		success: function(data){
+			address = data.data;
+			getProvince(address);
+			getcity(address);
+		}
+	});
+
+	function getProvince(address) {
+		var province = new Array();
+		var tempProvice = '';
+		$.each(address,function (name,value) {
+			if(value.province != tempProvice){
+				province.push(value.province);
+				tempProvice = value.province;
+			}
+		});
+		var html = '';
+		$.each(province,function (index,value) {
+			if (value == "{{$address->province}}" ) {
+				html += "<option value='"+value+"' selected='selected'>"+value+"</option>";
+			} else {
+				html += "<option value='"+value+"' >"+value+"</option>";
+			}
+		});
+		$('.province').append(html);
+	}
+
+	function getcity (address) {
+		var province = $('.province').val();
+		var cities = [];
+		$('.city').empty();
+		$.each(address,function (index,value) {
+			if(value.province == province){
+				cities.push(value);
+			}
+		});
+		var html = '';
+		$.each(cities,function (index,value) {
+			if (value.id == '{{$address->id}}') {
+				html += "<option value='"+value.id+"' selected='selected'>"+value.city+"</option>";
+			} else {
+				html += "<option value='"+value.id+"' >"+value.city+"</option>";
+			}
+		});
+		$('.city').append(html);
+	}
+
+	$('.province').change(function () {
+		var province = $(this).val();
+		var cities = [];
+		$('.city').empty();
+		$.each(address,function (index,value) {
+			if(value.province == province){
+				cities.push(value);
+			}
+		});
+		var html = '';
+		$.each(cities,function (index,value) {
+				html += "<option value='"+value.id+"' >"+value.city+"</option>";
+		});
+		$('.city').append(html);
 	});
 });
 </script> 

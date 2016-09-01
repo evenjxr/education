@@ -23,7 +23,7 @@
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script>
 <![endif]-->
-<title>场上见后台管理系统</title>
+<title>京南教育后台</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
     @yield('css')
