@@ -183,7 +183,7 @@ class Order extends Controller
     private function validateServer($request)
     {
         $this->validate($request, [
-            'equipment_status' => 'required|numeric',
+            'equipment' => 'required|numeric',
             'homework_server' => 'required|numeric',
             'prepare_server' => 'required|numeric',
             'extra_server' => 'required|numeric',
@@ -191,7 +191,7 @@ class Order extends Controller
             'status' => 'required|in:1,2,3,4',
             'mobile' => 'required|digits:11'
         ], [
-            'equipment_status.required' => '请核实设备数量',
+            'equipment.required' => '请核实设备数量',
             'homework_server.required' => '请核实作业辅导服务',
             'prepare_server.required' => '请核实预习复习服务',
             'extra_server.required' => '请核实补习服务',
@@ -206,7 +206,7 @@ class Order extends Controller
     private function validateEquipment($request)
     {
         $this->validate($request, [
-            'member_type' => 'required|in:teacher,student',
+            'member_type' => 'required|in:teacher,student,institution',
             'time' => 'required',
             'address_id' => 'required|numeric',
             'address_detail' => 'required|min:5',

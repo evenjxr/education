@@ -113,8 +113,13 @@ class Account extends Controller
     {
         $this->userInfo($request);
         $password = Input::get('password');
-        $this->userInfo->update(['password'=>md5($password)]);
-        return response()->json(['success' => 'Y','msg' => '修改成功']);
+        $newPassword = Input::get('new_password');
+        if (md5($password) == $this->userInfo->password) {
+            $this->userInfo->update(['password'=>md5($newPassword)]);
+            return response()->json(['success' => 'Y','msg' => '修改成功']);
+        } else {
+            return response()->json(['success' => 'N','msg' => '修改成功']);
+        }
     }
 
     public  function findPassword(Request $request)
