@@ -7,6 +7,7 @@ use App\Models\Institution;
 use App\Models\Student;
 use Input;
 use Session;
+use App\Extra\SMS;
 
 use App\Models\Server as ServerM;
 use App\Models\Teacher as TeacherM;
@@ -34,10 +35,8 @@ class Server extends Controller
         $lists = $server->get();
         foreach ($lists as $key => $value){
             $lists[$key]->manage_name = ManageM::find($value->manage_id)['truename'];
-            $teacher = EquipmentM::where('equipment.mobile',$value->mobile)
-                ->leftjoin('teachers','teachers.id','=','equipment.teacher_id')
-                ->select('truename','teachers.id','equipment.teacher_id','teacher_id')->get()[0]->truename;
-            $lists[$key]->teacher_name = $teacher;
+            $teacher = TeacherM::find($value->teacher_id);
+            $lists[$key]->teacher_name = $teacher->truename;
         }
         $amounts = ServerM::all(['total_fee','status']);
         $total = $has_pay = 0;
@@ -50,18 +49,17 @@ class Server extends Controller
         return view('server.lists',['lists'=>$lists,'total'=>$total,'has_pay'=>$has_pay]);
     }
 
-    public function add()
+    public function smsConfirm()
     {
-     //    $channel = AM::channel();
-        // return view('server.add')->with(['channel'=>$channel,'standard'=>$this->standard]);
+        $id = Input::get('id');
+        $server = ServerM::find($id);
+        $teacher = TeacherM::find($server->teacher_id);
+        $param = ['amount'=>$server->total_fee,'teacher'=>$teacher->truename];
+        SMS::send(SMS::SMS_CONFIRM, $server->mobile,$param);
+        return $this->lists()->with('success', '发送成功');
     }
 
-    public function store()
-    {
-        // $params = Input::all();
-     //    $flag = AM::create($params);
-     //    if ($flag) return $this->detail($flag->id)->with('success', '新增成功');
-    }
+    
 
     public function detail()
     {

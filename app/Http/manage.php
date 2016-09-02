@@ -134,6 +134,8 @@ Route::group(['prefix' => 'institution'], function () {
 Route::group(['prefix' => 'server'], function () {
 
     Route::get('lists',['uses' => 'Manage\Server@lists', 'as' => 'manage.server.lists']);
+    
+    Route::get('smsconfirm',['uses' => 'Manage\Server@smsConfirm', 'as' => 'manage.server.smsconfirm']);
 
     Route::get('auth',['uses' => 'Manage\Server@auth', 'as' => 'manage.server.auth']);
 

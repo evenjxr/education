@@ -21,8 +21,8 @@
 					<th width="130">下单时间</th>
 					<th width="60">服务员工</th>
 					<th width="60">预约老师</th>
-					<th width="60">状态</th>
-					<th width="140">操作</th>
+					<th width="50">状态</th>
+					<th width="150">操作</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -52,6 +52,7 @@
 							<a class="c-primary" onClick="shiftStatus({{$val->id}},0)" href="javascript:;" title="取消订单">取消订单</a>
 							<a style="text-decoration:none" onClick="shiftStatus({{$val->id}},2)" href="javascript:;" title="已支付">已支付</a>
 							<a style="text-decoration:none" onClick="shiftStatus({{$val->id}},3)" href="javascript:;" title="退单">退单</a>
+							<a style="text-decoration:none" class="ml-5" href="{{ URL::route('manage.server.smsconfirm',['id'=>$val->id]) }}" title="编辑"><i class="Hui-iconfont">&#xe68a;</i></a>
 							<a title="编辑" href="javascript:;" onclick="article_edit('管理员编辑','{{ URL::route("manage.server.detail",['id'=>$val->id]) }}')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 						</td>
 					</tr>

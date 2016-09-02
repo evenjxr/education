@@ -118,7 +118,7 @@ class Account extends Controller
             $this->userInfo->update(['password'=>md5($newPassword)]);
             return response()->json(['success' => 'Y','msg' => '修改成功']);
         } else {
-            return response()->json(['success' => 'N','msg' => '修改成功']);
+            return response()->json(['success' => 'N','msg' => '修改失败']);
         }
     }
 

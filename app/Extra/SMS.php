@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class SMS
 {
     use DispatchesJobs;
+    const SMS_CONFIRM = 'sms_server_confirm';
     
     const XSEND_URL = 'https://api.submail.cn/message/xsend';
     const MULTIXSEND_URL = 'https://api.submail.cn/message/multixsend';

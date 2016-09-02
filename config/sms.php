@@ -7,18 +7,6 @@
  */
 return [
     'api'=>[
-        'auth_mobile'=>[
-            'id'      => 'TrGZd2',
-            'vars'    => ['code'],
-            'desc'    => '手机号认证',
-            'content' => '【场上见】您的验证码为@var(code)，请于10分钟内正确输入验证码。如非本人操作，请忽略本短信。'
-        ],
-        'schedule_check'=>[
-            'id'      => 'TmmIZ3',
-            'vars'    => ['time'],
-            'desc'    => '检录提醒',
-            'content' => '【场上见】您的比赛将于@var(time)开始，请您及时到检录处检录。'
-        ],
         'sms_register'=>[
             'id'      => 'rxiqX',
             'vars'    => ['code'],
@@ -30,6 +18,12 @@ return [
             'vars'    => ['code'],
             'desc'    => '手机号认证',
             'content' => '【京南教育】您的验证码为@var(code)，请于10分钟内正确输入验证码。如非本人操作，请忽略本短信。'
+        ],
+        'sms_server_confirm'=>[
+            'id'      => 'tVT0Y4',
+            'vars'    => ['teacher','amount'],
+            'desc'    => '支付确认',
+            'content' => '【京南教育】您在我平台的预约的老师 @var(teacher) ,支付费用@var(amount) 元，请确认。如果不对，请联系工作人员。'
         ]
-    ],
+    ]
 ];
