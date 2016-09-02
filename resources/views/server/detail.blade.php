@@ -42,14 +42,14 @@
 				</div>
 				<label class="form-label col-xs-2 col-sm-2">推荐人：</label>
 				<div class="col-xs-3 col-sm-3">
-					<input type="text" class="input-text" value="{{$server->referrer->type}} -- {{$server->referrer->truename}}">
+					<input type="text" class="input-text" value="{{ isset($server->referrer->type) ? $server->referrer->type :''}} -- {{ isset($server->referrer->truename) ? $server->referrer->truename : ''}}">
 				</div>
 			</div>
 
 			<div class="row cl">
 				<label class="form-label col-xs-2 col-sm-2">推荐人电话：</label>
 				<div class="formControls col-xs-3 col-sm-3">
-					<input type="text" class="input-text" value="{{$server->referrer->mobile}}">
+					<input type="text" class="input-text" value="{{ isset($server->referrer->mobile) ? $server->referrer->mobile : ''}}">
 				</div>
 				<label class="form-label col-xs-2 col-sm-2">外勤人员：</label>
 				<div class="col-xs-3 col-sm-3">

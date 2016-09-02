@@ -40,15 +40,16 @@ class Order extends Controller
         $id = Input::get('id');
         $server = ServerM::find($id);
         $teacher = TeacherM::find($server->teacher_id,['truename']);
-        $student = StudentM::find(5);
+        $student = StudentM::find($server->user_id);
         $manage = ManageM::find($server->manage_id);
-
         $server->manage_name = $manage->truename;
         $server->grade = isset($student->grade) ? $this->grades[$student->grade] : '';
         $server->student_state = '';
-        $state = '';
-        foreach(unserialize($student->state) as $key=>$value){
-            $state = $state.' '.$this->state[$value];
+        $state = ' ';
+        if (!empty($student->state)) {
+            foreach(unserialize($student->state) as $key=>$value){
+                $state = $state.' '.$this->state[$value];
+            }
         }
         $server->student_state = $state;
         $server->teacher_extra_server_fee = $teacher->extra_server_fee;
@@ -117,7 +118,7 @@ class Order extends Controller
         $param['sn'] = $this->build_order_no();
         $flag = ServerM::firstOrCreate($param);
         if ($flag) {
-            return response()->json(['success'=>'Y','msg'=>'下单成功']);
+            return response()->json(['success'=>'Y','msg'=>'下单成功','data'=>$flag]);
         } else {
             return response()->json(['success'=>'N','msg'=>'下单失败']);
         }

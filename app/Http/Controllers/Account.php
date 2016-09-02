@@ -156,6 +156,9 @@ class Account extends Controller
         if (isset($this->userInfo->subjects)) {
             $this->userInfo->subjects = unserialize($this->userInfo->subjects);
         }
+        if (isset($this->userInfo->state)) {
+            $this->userInfo->state = unserialize($this->userInfo->state);
+        }
         if (isset($this->userInfo->work_time)) {
             $this->userInfo->work_time = unserialize($this->userInfo->work_time);
         }
