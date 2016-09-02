@@ -92,6 +92,7 @@ class Institution extends Controller
             'institution_id'=>$this->userInfo->id,
             'truename'=>$param['truename'],
             'mobile'=>$param['mobile'],
+            'sex'=>$param['sex'],
             'password'=>md5($param['password'])
         ]);
         if ($teacher) {
