@@ -66,6 +66,8 @@ Route::group(['prefix' => 'teacher'], function () {
 
 Route::group(['prefix' => 'institution'], function () {
 
+    Route::get('lists', ['uses' => 'Institution@lists']);
+
     Route::get('teachers', ['uses' => 'Institution@teachers']);
 
     Route::get('detail/{id}', ['uses' => 'Institution@detail']);

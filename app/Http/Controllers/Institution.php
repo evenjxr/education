@@ -23,14 +23,13 @@ class Institution extends Controller
             $data = $data->where('grade',$params['grade']);
         if (isset($params['schoolwork']) && !empty($params['schoolwork']))
             $data = $data->where('schoolwork','like','%'.$params['schoolwork'].'%');
-        if (isset($params['truename']) && !empty($params['truename']))
-            $data = $data->where('schoolwork',$params['truename']);
+        if (isset($params['name']) && !empty($params['name']))
+            $data = $data->where('schoolwork',$params['name']);
         if (isset($params['mobile']) && !empty($params['mobile']))
             $data = $data->where('mobile',$params['mobile']);
 
-        $data = $data->orderBy('hits','desc')
-            ->orderBy('star','desc')
-            ->paginate('10',['id','truename','star','school_name','worked_year','grade','subject','introduction','avatar'])->toArray();
+        $data = $data->orderBy('id','desc')
+            ->paginate('10')->toArray();
         return response()->json(['success' => 'Y','msg' => '','data'=>$data['data']]);
     }
 

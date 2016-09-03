@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="588eca89-640f-4040-8981-bbcba2040399" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Order.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Order.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Institution.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Institution.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/v1.php" afterPath="$PROJECT_DIR$/app/Http/v1.php" />
     </list>
     <ignored path="basketball.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +29,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Order.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Order.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Order.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="132">
@@ -62,11 +63,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Institution.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Institution.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Institution.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="90" column="44" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
+            <state relative-caret-position="360">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="v1.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/v1.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="68" column="53" selection-start-line="68" selection-start-column="53" selection-end-line="68" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -120,7 +131,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/Manage/Equipment.php" />
         <option value="$PROJECT_DIR$/config/database.php" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/app/Http/v1.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Controller.php" />
         <option value="$PROJECT_DIR$/config/sms.php" />
         <option value="$PROJECT_DIR$/app/Extra/SMS.php" />
@@ -129,8 +139,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/Manage/Server.php" />
         <option value="$PROJECT_DIR$/resources/views/server/detail.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Account.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Institution.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Order.php" />
+        <option value="$PROJECT_DIR$/app/Http/v1.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Institution.php" />
       </list>
     </option>
   </component>
@@ -146,7 +157,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="712" />
+    <option name="height" value="717" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -173,6 +184,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -279,7 +291,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -450,15 +461,16 @@
       <workItem from="1472823945062" duration="2005000" />
       <workItem from="1472828762332" duration="291000" />
       <workItem from="1472830758664" duration="136000" />
-      <workItem from="1472863890322" duration="58000" />
+      <workItem from="1472863890322" duration="398000" />
+      <workItem from="1472865224553" duration="375000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="687031000" />
+    <option name="totallyTimeSpent" value="687746000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="712" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="717" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22421876" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -841,13 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/v1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/server/detail.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
@@ -874,14 +879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Institution.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="90" column="44" selection-start-line="90" selection-start-column="44" selection-end-line="90" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Order.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -889,6 +886,22 @@
           <folding>
             <element signature="e#41#81#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/v1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="68" column="53" selection-start-line="68" selection-start-column="53" selection-end-line="68" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Institution.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
