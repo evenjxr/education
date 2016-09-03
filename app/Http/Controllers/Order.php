@@ -131,7 +131,7 @@ class Order extends Controller
         $param = Input::all();
         $param['sn'] = $this->build_order_no();
         $param['user_id'] = $this->userInfo->id;
-        if ($this->type == 'student') {
+        if ($this->type == 'student' && $this->type == 'teacher_id') {
             $param['teacher_id'] && $this->userInfo->update(['teacher_id'=>$param['teacher_id']]);
         }
         unset($param['city']); unset($param['province']);
