@@ -66,11 +66,10 @@ class Teacher extends Controller
         return response()->json(['success' => 'Y','msg' => '','data'=>$data]);
     }
 
-    public function update(Request $request)
+    public function update()
     {
-        $this->userInfo($request);
         $params = Input::all();
-        $teacher = $this->userInfo;
+        $teacher = TeacherM::find($params['id']);
         $params['work_time'] = isset($params['work_time']) ? serialize($params['work_time']) : '';
         $params['schoolwork'] = isset($params['schoolwork']) ? serialize($params['schoolwork']) : '';
         $params['grades'] = isset($params['grades']) ? serialize($params['grades']) : '';
