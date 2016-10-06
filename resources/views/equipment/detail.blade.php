@@ -6,7 +6,7 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预约{{$equipment->member_type}}姓名：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="{{$equipment->truename}}" placeholder="" name="truename" readonly>
+					<input type="text" class="input-text" value="{{$equipment->truename}}" placeholder="" name="" readonly>
 				</div>
 			</div>
 
@@ -27,24 +27,19 @@
 			<div class="row cl">
 				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预约时间：</label>
 				<div class="formControls col-xs-8 col-sm-9">
-					<input type="text" class="input-text" value="{{$equipment->time}}" placeholder="" id="mobile" name="mobile">
+					<input type="text" class="input-text" value="{{$equipment->time}}" placeholder="" id="mobile" name="time">
 				</div>
 			</div>
-
 			<div class="row cl">
-				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预约类型：</label>
-				<div class="formControls col-xs-8 col-sm-9 skin-minimal">
-					<div class="radio-box">
-						<input name="recommend_type" type="radio" id="sex-1" value="1" @if($equipment->recommend_type==1) checked @endif>
-						<label for="sex-1">平台推荐</label>
-					</div>
-					<div class="radio-box">
-						<input type="radio" id="sex-2" value="2" name="recommend_type" @if($equipment->recommend_type==2) checked @endif>
-						<label for="sex-2">指定老师</label>
-					</div>
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>被预约老师：</label>
+				<div class="formControls col-xs-5 col-sm-7">
+					<input type="text" class="input-text" value="{{$equipment->teacher_name}}" placeholder="" id="teacher_name" name="">
+					<input type="hidden" class="input-text" value="{{$equipment->teacher_id}}" placeholder="" id="teacher_id" name="teacher_id">
+				</div>
+				<div class="formControls col-xs-2 col-sm-2">
+					<button class="btn btn-success" onClick="update_teacher('教师库','{{ URL::route('manage.teacher.search')}}','900','500')" type="button"><i class="Hui-iconfont">&#xe665;</i> 教师列表</button>
 				</div>
 			</div>
-
 			<div class="row cl">
 				<label class="form-label col-xs-3 col-sm-2">选择省份：</label>
 				<div class="formControls col-md-3 col-sm-3"> <span class="select-box" style="width:150px;">
@@ -191,8 +186,9 @@
 
 			});
 
-
-
+			function update_teacher(title,url,w,h){
+				layer_show(title,url,w,h);
+			}
 
 		</script>
 @endsection

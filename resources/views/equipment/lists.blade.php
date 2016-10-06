@@ -17,7 +17,6 @@
 					<th width="70">联系人姓名</th>
 					<th width="100">老师/学生</th>
 					<th width="180">地址</th>
-					<th width="50">推荐类型</th>
 					<th width="140">下单时间</th>
 					<th width="80">状态</th>
 					<th width="140">操作</th>
@@ -31,7 +30,6 @@
 						<td>{{$val->link_name}}</td>
 						<td>{{$val->member_type}}</td>
 						<td>{{$val->city}} , {{$val->address_detail}}</td>
-						<td>{{$val->recommend_type}}</td>
 						<td>{{$val->created_at}}</td>
 						<td>				
 							@if($val->status==0)

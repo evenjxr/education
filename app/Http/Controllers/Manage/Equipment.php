@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Manage;
 
 use App\Http\Controllers\Controller;
+use App\Models\Teacher;
 use Input;
 use Session;
 
 use App\Models\Equipment as EquipmentM;
 use App\Models\Address as AddressM;
 use App\Models\Student as StudentM;
+use App\Models\Teacher as TeacherM;
 
 class Equipment extends Controller
 {
@@ -33,11 +35,6 @@ class Equipment extends Controller
         $lists = $equipment->get();
         foreach ($lists as $key=>$value) {
             $lists[$key]->city = AddressM::find($value->address_id) ['city'];
-            if ($value->recommend_type == 1) {
-                $lists[$key]->recommend_type = '平台推荐';
-            } else {
-                $lists[$key]->recommend_type = '指定老师';
-            }
         }
     	return view('equipment.lists',['lists'=>$lists]);
     }
@@ -61,15 +58,16 @@ class Equipment extends Controller
         $equipment = EquipmentM::find($id);
         $address = AddressM::find($equipment->address_id);
         $equipment->truename = StudentM::find($equipment->user_id)['truename'];
+        $equipment->teacher_name = TeacherM::find($equipment->teacher_id)['truename'];
         return view('equipment.detail',['equipment'=>$equipment,'address'=>$address]);
     }
 
     public function update()
     {
-        // $params = Input::all();
-        // $equipment = AM::find($params['id']);
-        // $equipment->update($params);
-        // if ($equipment) return $this->detail($equipment->id)->with('success', '修改成功');
+         $params = Input::all();
+         $equipment = EquipmentM::find($params['id']);
+         $equipment->update($params);
+         if ($equipment) return $this->detail($equipment->id)->with('success', '修改成功');
     }
 
     public function auth()

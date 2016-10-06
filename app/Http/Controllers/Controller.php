@@ -122,6 +122,9 @@ abstract class Controller extends BaseController
         $token = $request->header('token');
         if ($token) {
             $user = LTM::where('token',$token)->first(['user_id','type']);
+            if (!$user) {
+                exit(response()->json(['success' => 'N','msg' => '请先登录']));
+            }
             if (count($user->user_id)<1)
                 die(response()->json(['success' => 'N','msg' => 'token已失效请从新登录']));
             $this->type = $user->type;

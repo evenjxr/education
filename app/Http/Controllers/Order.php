@@ -209,19 +209,19 @@ class Order extends Controller
         $this->validate($request, [
             'member_type' => 'required|in:teacher,student,institution',
             'time' => 'required',
+            'teacher_id' => 'required',
             'address_id' => 'required|numeric',
             'address_detail' => 'required|min:5',
             'link_name' => 'required|min:2',
-            'recommend_type' => 'required|in:1,2',
             'mobile' => 'required|digits:11'
         ], [
             'member_type.required' => '账号类型不得为空',
             'member_type.in' => '账号类型不正确',
             'time.required' => '安装时间不得为空',
+            'teacher_id.required' => '请选择预约老师',
             'address_id.required' => '请核实地址',
             'address_detail.required' => '请核实详细地址',
             'link_name.required' => '请核实联系人姓名',
-            'recommend_type.in' => '请核实推荐类型',
             'mobile.required' => '手机号不得为空',
             'mobile.digits' => '手机号格式不正确'
         ]);

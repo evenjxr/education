@@ -86,15 +86,13 @@ class Teacher extends Base
     {
         $keyword = Input::get('keyword');
         if (isset($keyword) && !empty($keyword)){
-            $lists = UM::where('name','like','%'.$keyword.'%')
-                ->orWhere('nickname','like','%'.$keyword.'%')
+            $lists = teacherM::where('username','like','%'.$keyword.'%')
                 ->orWhere('mobile','like','%'.$keyword.'%')
-                ->orWhere('idcard','like','%'.$keyword.'%')
                 ->get();
         } else {
-            $lists = UM::get();
+            $lists = teacherM::get();
         }
-        return view('user.search',['lists'=>$lists]);
+        return view('teacher.search',['lists'=>$lists]);
     }
 
     public function  score()

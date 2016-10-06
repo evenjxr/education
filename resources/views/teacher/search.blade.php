@@ -2,8 +2,8 @@
 @section('body')
 	<div class="page-container">
 		<div class="text-c">
-			<form method="get" action="{{ URL::route('manage.user.search') }}">
-				<input type="text" class="input-text" style="width:250px" placeholder="微信昵称,姓名,手机号,身份证" id="" name="keyword">
+			<form method="get" action="{{ URL::route('manage.teacher.search') }}">
+				<input type="text" class="input-text" style="width:250px" placeholder="手机号,姓名" id="" name="keyword">
 				<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
 			</form>
 		</div>
@@ -12,34 +12,22 @@
 				<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="40">ID</th>
-					<th width="100">姓名</th>
-					<th width="100">昵称</th>
-					<th width="60">性别</th>
+					<th width="100">真是姓名</th>
+					<th width="100">年龄</th>
+					<th width="60">学校</th>
 					<th width="120">手机</th>
-					<th width="90">城市</th>
+					<th width="90">地址</th>
 				</tr>
 				</thead>
 				<tbody>
 				@foreach($lists as $val)
 					<tr class="text-c">
-						<td><input type="radio" value="{{$val->id}}" name="id"></td>
-						<td>{{$val->id}}</td>
-						<td>
-							<u style="cursor:pointer" class="text-primary" onclick="member_show('{{$val->name}}','{{ URL::route('manage.user.show',['id'=>$val->id]) }}','10001','360','400')">{{$val->name}}</u>
-						</td>
-						<td>
-							<u style="cursor:pointer" class="text-primary" onclick="member_show('{{$val->name}}','{{ URL::route('manage.user.show',['id'=>$val->id]) }}','10001','360','400')">{{$val->nickname}}</u>
-						</td>
-						<td>
-							@if($val->sex==1)
-								男
-							@else
-								女
-							@endif
-						</td>
+						<td><input type="checkbox" value="{{$val->id}}" name="id"></td>
+						<td>{{$val->truename ? :''}}</td>
+						<td>{{$val->age}}</td>
+						<td>{{$val->school_name}}</td>
 						<td>{{$val->mobile}}</td>
-						<td>{{$val->city}}</td>
+						<td>{{$val->address}}</td>
 					</tr>
 				@endforeach
 				</tbody>
@@ -71,11 +59,11 @@
 
 		function get_user()
 		{
-			var id = $(window.parent.document).contents().find('input[select="user_id"]');
-			var name = $(window.parent.document).contents().find('input[select="user_name"]');
+			var id = $(window.parent.document).contents().find('#teacher_id');
+			var name = $(window.parent.document).contents().find('#teacher_name');
 			var obj = $('input[name="id"]:checked');
 			id.val(obj.val());
-			name.val(obj.parent().next().next().find('u').html());
+			name.val(obj.parent().next().html());
 			layer_close();
 		}
 
